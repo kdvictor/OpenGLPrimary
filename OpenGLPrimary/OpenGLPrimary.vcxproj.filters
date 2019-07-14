@@ -13,5 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\command">
+      <UniqueIdentifier>{8ecf46df-55fa-41e7-b6f0-1ff4906fb873}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\command">
+      <UniqueIdentifier>{fb78fe35-ba7b-4a6b-8716-72e4892437ae}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="command_render_point.cpp">
+      <Filter>Source Files\command</Filter>
+    </ClCompile>
+    <ClCompile Include="command_render_base.cpp">
+      <Filter>Source Files\command</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\common_macrosh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\command\command_render_point.h">
+      <Filter>Header Files\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\command\command_render_base.h">
+      <Filter>Header Files\command</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
