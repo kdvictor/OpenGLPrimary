@@ -24,6 +24,9 @@
 #define LH_NAMESPACE_END }
 #endif
 
+#ifndef LH_EXPORT
+#define LH_EXPORT _declspec(dllexport)
+#endif
 
 #endif COMMON_MACROS_H_
 

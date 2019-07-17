@@ -20,7 +20,7 @@
 
 LH_NAMESPACE_BEGIN
 
-class RenderPointCommand : public RenderCommandBase
+class LH_EXPORT RenderPointCommand : public RenderCommandBase
 {
 public:
 	virtual void Render();

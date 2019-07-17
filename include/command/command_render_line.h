@@ -5,31 +5,27 @@
 
 *Author:huanliu_uestc@163.com
 
-*FileName:command_render_base.h
-*Brief: base render command
+*FileName:command_render_line.h
+*Brief: render line
 
-*Date: 2019.7.15
+*Date: 2019.7.17
 ==============================
 */
 
-#ifndef COMMAND_BASE_H_
-#define COMMAND_BASE_H_
+#ifndef COMMAND_RENDER_LINE_H_
+#define  COMMAND_RENDER_LINE_H_
 
 #include "common_macrosh.h"
-#include "common.h"
+#include "command/command_render_base.h"
 
 LH_NAMESPACE_BEGIN
 
-class LH_EXPORT RenderCommandBase
+class LH_EXPORT RenderLineCommand : public RenderCommandBase
 {
 public:
 	virtual void Render();
-
-public:
-	static void Init();
 };
 
 LH_NAMESPACE_END
 
 #endif
-

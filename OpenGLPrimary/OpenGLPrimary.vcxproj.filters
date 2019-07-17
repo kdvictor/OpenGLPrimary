@@ -30,6 +30,9 @@
     <ClCompile Include="command_render_base.cpp">
       <Filter>Source Files\command</Filter>
     </ClCompile>
+    <ClCompile Include="command_render_line.cpp">
+      <Filter>Source Files\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files\command</Filter>
     </ClInclude>
     <ClInclude Include="..\include\command\command_render_base.h">
+      <Filter>Header Files\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\command\command_render_line.h">
       <Filter>Header Files\command</Filter>
     </ClInclude>
   </ItemGroup>

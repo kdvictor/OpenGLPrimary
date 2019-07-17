@@ -117,11 +117,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="command_render_base.cpp" />
+    <ClCompile Include="command_render_line.cpp" />
     <ClCompile Include="command_render_point.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\command\command_render_base.h" />
+    <ClInclude Include="..\include\command\command_render_line.h" />
     <ClInclude Include="..\include\command\command_render_point.h" />
     <ClInclude Include="..\include\common_macrosh.h" />
     <ClInclude Include="common.h" />
