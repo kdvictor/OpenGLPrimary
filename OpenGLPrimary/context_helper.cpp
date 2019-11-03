@@ -30,4 +30,32 @@ unsigned char* ContextHelper::LoadFileContent(const char* pFilePath)
 	return pFileContent;
 }
 
+unsigned char* ContextHelper::DecodeBMP(unsigned char* bmpFileData, int& width, int& height)
+{
+	unsigned char* pPixelData = nullptr;
+
+	if (0x4D42 == *((unsigned short*)bmpFileData)) //ÅÐ¶ÏÊÇ²»ÊÇbmpÍ¼Ïñ
+	{
+		int pixelDataOffset = *((int*)(bmpFileData + 10));
+		width = *((int*)(bmpFileData + 18));
+		height = *((int*)(bmpFileData + 22));
+		pPixelData = bmpFileData + pixelDataOffset;
+		if (pPixelData == nullptr)
+		{
+			//log
+			return nullptr;
+		}
+
+		//bgr->rgb
+		for (int i = 0; i < width*height*3; i+=3)
+		{
+			pPixelData[i] = pPixelData[i] ^ pPixelData[i + 2];
+			pPixelData[i + 2] = pPixelData[i] ^ pPixelData[i + 2];
+			pPixelData[i] = pPixelData[i] ^ pPixelData[i + 2];
+		}
+	}
+
+	return pPixelData;
+}
+
 LH_NAMESPACE_END

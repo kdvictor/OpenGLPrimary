@@ -15,6 +15,8 @@
 #ifndef __COMMAND_TEXTURE_H__
 #define  __COMMAND_TEXTURE_H__
 
+#include <windows.h>
+#include <gl/GL.h> //注意：windows.h必须放在最前面
 #include "common_macrosh.h"
 
 LH_NAMESPACE_BEGIN
@@ -23,6 +25,9 @@ class LH_EXPORT Texture
 {
 public:
 	void Init(const char* pImagePath);
+
+public:
+	GLuint mTextureId; //gpu,通过此ID可以找到纹理
 
 };
 

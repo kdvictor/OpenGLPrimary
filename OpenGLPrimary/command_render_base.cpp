@@ -19,9 +19,8 @@ void RenderCommandBase::Init()
 
 void RenderCommandBase::InitTexture()
 {
-	unsigned char* str = ContextHelper::LoadFileContent("text.txt");
-	printf("%s\n", str);
-		//Texture textture;
+	Texture textture;
+	textture.Init("text.bmp");
 }
 
 LH_NAMESPACE_END

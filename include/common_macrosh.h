@@ -28,6 +28,19 @@
 #define LH_EXPORT _declspec(dllexport)
 #endif
 
+
+#ifndef DEL_PTR
+#define DEL_PTR(ptr)        \
+	do                      \
+	{                       \
+		if (ptr != nullptr) \
+		{                   \
+			delete (ptr);   \
+			ptr = nullptr;  \
+		}                   \
+	} while (false)
+#endif
+
 #endif COMMON_MACROS_H_
 
 
