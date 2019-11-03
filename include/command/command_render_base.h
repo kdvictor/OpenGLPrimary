@@ -27,6 +27,7 @@ public:
 
 public:
 	static void Init();
+	static void InitTexture();
 };
 
 LH_NAMESPACE_END

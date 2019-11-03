@@ -88,6 +88,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//初始化
 	LH::RenderCommandBase::Init();
+	LH::RenderCommandBase::InitTexture();
 	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //擦除背景色
 
 	//显示窗口
