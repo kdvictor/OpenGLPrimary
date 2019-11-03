@@ -5,24 +5,24 @@
 
 *Author:huanliu_uestc@163.com
 
-*FileName:texture.h
-*Brief: texture
+*FileName:context_helper.h
+*Brief: context helper
 
 *Date: 2019.11.3
 ==============================
 */
 
-#ifndef __COMMAND_TEXTURE_H__
-#define  __COMMAND_TEXTURE_H__
+#ifndef __COMMAND_CONTEXTHELPER_H__
+#define  __COMMAND_CONTEXTHELPER_H__
 
 #include "common_macrosh.h"
 
 LH_NAMESPACE_BEGIN
 
-class LH_EXPORT Texture
+class LH_EXPORT ContextHelper
 {
 public:
-	void Init(const char* pImagePath);
+	static unsigned char* LoadFileContent(const char* pFilePath);
 
 };
 

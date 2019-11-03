@@ -128,6 +128,7 @@
     <ClCompile Include="command_render_tringlestrip.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="texture.cpp" />
+    <ClCompile Include="context_helper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\command\command_render_base.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="..\include\command\command_render_tringles.h" />
     <ClInclude Include="..\include\common_macrosh.h" />
     <ClInclude Include="..\include\context\texture.h" />
+    <ClInclude Include="..\include\context\context_helper.h" />
     <ClInclude Include="common.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
