@@ -19,6 +19,12 @@
     <Filter Include="Source Files\command">
       <UniqueIdentifier>{fb78fe35-ba7b-4a6b-8716-72e4892437ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\context">
+      <UniqueIdentifier>{81ea7c01-0486-4434-b459-a76f11072f0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\context">
+      <UniqueIdentifier>{ff0a9d1a-c5b1-464b-8647-9721934479b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -54,6 +60,9 @@
     <ClCompile Include="command_render_pan_rotate_zoom_matrix_light.cpp">
       <Filter>Source Files\command</Filter>
     </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>Source Files\context</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -85,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="..\include\command\command_render_pan_rotate_zoom_matrix_light.h">
       <Filter>Header Files\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\context\texture.h">
+      <Filter>Header Files\context</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
