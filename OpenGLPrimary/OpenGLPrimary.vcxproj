@@ -121,6 +121,7 @@
     <ClCompile Include="command_render_line_loop.cpp" />
     <ClCompile Include="command_render_line_strip.cpp" />
     <ClCompile Include="command_render_point.cpp" />
+    <ClCompile Include="command_render_tringlefan.cpp" />
     <ClCompile Include="command_render_tringles.cpp" />
     <ClCompile Include="command_render_tringlestrip.cpp" />
     <ClCompile Include="main.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="..\include\command\command_render_line_loop.h" />
     <ClInclude Include="..\include\command\command_render_line_strip.h" />
     <ClInclude Include="..\include\command\command_render_point.h" />
+    <ClInclude Include="..\include\command\command_render_tringlefan.h" />
     <ClInclude Include="..\include\command\command_render_tringles.h" />
     <ClInclude Include="..\include\common_macrosh.h" />
     <ClInclude Include="common.h" />
