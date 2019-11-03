@@ -42,6 +42,9 @@
     <ClCompile Include="command_render_tringles.cpp">
       <Filter>Source Files\command</Filter>
     </ClCompile>
+    <ClCompile Include="command_render_tringlestrip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
