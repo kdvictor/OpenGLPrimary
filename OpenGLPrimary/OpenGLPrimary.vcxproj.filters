@@ -42,10 +42,13 @@
     <ClCompile Include="command_render_tringles.cpp">
       <Filter>Source Files\command</Filter>
     </ClCompile>
-    <ClCompile Include="command_render_tringlestrip.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="command_render_tringlefan.cpp">
+      <Filter>Source Files\command</Filter>
+    </ClCompile>
+    <ClCompile Include="command_render_tringlestrip.cpp">
+      <Filter>Source Files\command</Filter>
+    </ClCompile>
+    <ClCompile Include="command_render_quads.cpp">
       <Filter>Source Files\command</Filter>
     </ClCompile>
   </ItemGroup>

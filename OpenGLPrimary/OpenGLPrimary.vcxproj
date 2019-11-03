@@ -121,6 +121,7 @@
     <ClCompile Include="command_render_line_loop.cpp" />
     <ClCompile Include="command_render_line_strip.cpp" />
     <ClCompile Include="command_render_point.cpp" />
+    <ClCompile Include="command_render_quads.cpp" />
     <ClCompile Include="command_render_tringlefan.cpp" />
     <ClCompile Include="command_render_tringles.cpp" />
     <ClCompile Include="command_render_tringlestrip.cpp" />
