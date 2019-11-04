@@ -24,6 +24,8 @@ LH_NAMESPACE_BEGIN
 class LH_EXPORT Texture
 {
 public:
+	Texture() {};
+	~Texture() {};
 	void Init(const char* pImagePath);
 
 public:

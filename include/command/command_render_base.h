@@ -23,6 +23,9 @@ LH_NAMESPACE_BEGIN
 class LH_EXPORT RenderCommandBase
 {
 public:
+	RenderCommandBase();
+	~RenderCommandBase();
+
 	virtual void Render();
 
 public:

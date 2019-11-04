@@ -132,6 +132,7 @@
     <ClCompile Include="command_render_pan_rotate_zoom_matrix_light.cpp" />
     <ClCompile Include="command_render_point.cpp" />
     <ClCompile Include="command_render_quads.cpp" />
+    <ClCompile Include="command_render_texture.cpp" />
     <ClCompile Include="command_render_tringlefan.cpp" />
     <ClCompile Include="command_render_tringles.cpp" />
     <ClCompile Include="command_render_tringlestrip.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="..\include\command\command_render_line_strip.h" />
     <ClInclude Include="..\include\command\command_render_pan_rotate_zoom_matrix_light.h" />
     <ClInclude Include="..\include\command\command_render_point.h" />
+    <ClInclude Include="..\include\command\command_render_texture.h" />
     <ClInclude Include="..\include\command\command_render_tringlefan.h" />
     <ClInclude Include="..\include\command\command_render_tringles.h" />
     <ClInclude Include="..\include\common_macrosh.h" />
