@@ -129,6 +129,7 @@
     <ClCompile Include="command_render_line.cpp" />
     <ClCompile Include="command_render_line_loop.cpp" />
     <ClCompile Include="command_render_line_strip.cpp" />
+    <ClCompile Include="command_render_objmodel.cpp" />
     <ClCompile Include="command_render_pan_rotate_zoom_matrix_light.cpp" />
     <ClCompile Include="command_render_point.cpp" />
     <ClCompile Include="command_render_quads.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="command_render_tringles.cpp" />
     <ClCompile Include="command_render_tringlestrip.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="objmodel.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="context_helper.cpp" />
   </ItemGroup>
@@ -145,12 +147,14 @@
     <ClInclude Include="..\include\command\command_render_line.h" />
     <ClInclude Include="..\include\command\command_render_line_loop.h" />
     <ClInclude Include="..\include\command\command_render_line_strip.h" />
+    <ClInclude Include="..\include\command\command_render_objmodel.h" />
     <ClInclude Include="..\include\command\command_render_pan_rotate_zoom_matrix_light.h" />
     <ClInclude Include="..\include\command\command_render_point.h" />
     <ClInclude Include="..\include\command\command_render_texture.h" />
     <ClInclude Include="..\include\command\command_render_tringlefan.h" />
     <ClInclude Include="..\include\command\command_render_tringles.h" />
     <ClInclude Include="..\include\common_macrosh.h" />
+    <ClInclude Include="..\include\context\objmodel.h" />
     <ClInclude Include="..\include\context\texture.h" />
     <ClInclude Include="..\include\context\context_helper.h" />
     <ClInclude Include="common.h" />

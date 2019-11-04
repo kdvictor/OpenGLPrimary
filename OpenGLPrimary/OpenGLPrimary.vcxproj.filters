@@ -69,6 +69,12 @@
     <ClCompile Include="command_render_texture.cpp">
       <Filter>Source Files\command</Filter>
     </ClCompile>
+    <ClCompile Include="objmodel.cpp">
+      <Filter>Source Files\context</Filter>
+    </ClCompile>
+    <ClCompile Include="command_render_objmodel.cpp">
+      <Filter>Source Files\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -108,6 +114,12 @@
       <Filter>Header Files\context</Filter>
     </ClInclude>
     <ClInclude Include="..\include\command\command_render_texture.h">
+      <Filter>Header Files\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\context\objmodel.h">
+      <Filter>Header Files\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\command\command_render_objmodel.h">
       <Filter>Header Files\command</Filter>
     </ClInclude>
   </ItemGroup>

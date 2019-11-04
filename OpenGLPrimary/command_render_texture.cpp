@@ -29,7 +29,7 @@ void RenderTextureCommand::Render()
 
 void RenderTextureCommand::InitTexture_i()
 {
-	mTexture.Init("test.bmp");
+	mTexture.Init("./res/test.bmp");
 }
 
 LH_NAMESPACE_END

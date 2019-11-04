@@ -12,8 +12,8 @@
 ==============================
 */
 
-#ifndef __COMMAND_TEXTURE_H__
-#define  __COMMAND_TEXTURE_H__
+#ifndef __TEXTURE_H__
+#define __TEXTURE_H__
 
 #include <windows.h>
 #include <gl/GL.h> //注意：windows.h必须放在最前面

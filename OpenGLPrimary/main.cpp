@@ -13,6 +13,7 @@
 #include "command/command_render_quads.h"
 #include "command/command_render_pan_rotate_zoom_matrix_light.h"
 #include "command/command_render_texture.h"
+#include "command/command_render_objmodel.h"
 
 /* 监听用户操作函数;LRESULT(函数返回值类型); CALLBACK(调用方式)
    hwnd(窗口句柄，用于标记用户操作了哪一个窗口); msg(消息ID，比如1表示用户拖拽了窗口);
@@ -110,7 +111,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 		glClear(GL_COLOR_BUFFER_BIT); //擦除颜色缓冲区
 
-		LH::RenderCommandBase* commandBase = new LH::RenderTextureCommand();
+		LH::RenderCommandBase* commandBase = new LH::RenderObjModelCommand();
 		commandBase->Render();
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
