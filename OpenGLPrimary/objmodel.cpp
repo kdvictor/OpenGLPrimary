@@ -4,8 +4,20 @@
 #include <vector>
 #include "context/objmodel.h"
 #include "context/context_helper.h"
+#include "common_macrosh.h"
 
 LH_NAMESPACE_BEGIN
+
+ObjModel::ObjModel()
+{
+
+}
+
+ObjModel::~ObjModel()
+{
+	DEL_ARRAY(mIndices);
+	DEL_ARRAY(mVertexes);
+}
 
 void ObjModel::Init(const char* objModel)
 {
@@ -34,7 +46,7 @@ void ObjModel::Init(const char* objModel)
 					ObjOneLineData data;
 					ssObjOneLine >> data.v[0];
 					ssObjOneLine >> data.v[1];
-					positions.push_back(data);
+					texttures.push_back(data);
 				}
 				else if(*(onlineContent + 1) == 'n')
 				{
@@ -96,6 +108,8 @@ void ObjModel::Init(const char* objModel)
 						vertexes.push_back(vertexDefine);
 					}
 					indexs.push_back(currentIndex);
+
+
 				}
 				break;
 			}
@@ -104,6 +118,25 @@ void ObjModel::Init(const char* objModel)
 			}
 		}
 	}
+
+	//转成绘制需要的数据
+	mIndicesCount = indexs.size();
+	mIndices = new int[mIndicesCount];
+	memset(mIndices, 0, sizeof(int)*mIndicesCount);
+	for (int i = 0; i < mIndicesCount; ++i)
+	{
+		mIndices[i] = indexs[i];
+	}
+
+	mVertexes = new VertexData[vertexes.size()];
+	for (int i = 0; i < vertexes.size(); ++i)
+	{
+		memcpy(mVertexes[i].mPosition, positions[vertexes[i].posiIndex - 1].v, sizeof(float) * 3);
+		memcpy(mVertexes[i].mTexcoord, texttures[vertexes[i].texcoordIndex - 1].v, sizeof(float) * 2);
+		memcpy(mVertexes[i].mNormal, normals[vertexes[i].normalIndex - 1].v, sizeof(float) * 3);
+	}
+
+
 
 	DEL_PTR(pFileContent);
 

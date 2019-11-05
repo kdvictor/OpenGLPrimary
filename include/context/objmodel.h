@@ -35,12 +35,16 @@ struct VerticeDefine
 class LH_EXPORT ObjModel
 {
 public:
+	ObjModel();
+	~ObjModel();
 	void Init(const char* objModel);
 
 public:
 	VertexData* mVertexes;
 
 	int* mIndices;
+
+	int mIndicesCount;
 
 };
 

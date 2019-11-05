@@ -41,6 +41,19 @@
 	} while (false)
 #endif
 
+#ifndef DEL_ARRAY
+#define DEL_ARRAY(ptr)\
+	do                      \
+	{                       \
+		if (ptr != nullptr) \
+		{                   \
+			delete [] ptr;   \
+			ptr = nullptr;  \
+		}                   \
+	} while (false)
+#endif
+
+
 #endif COMMON_MACROS_H_
 
 
