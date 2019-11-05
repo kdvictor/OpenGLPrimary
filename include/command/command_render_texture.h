@@ -25,9 +25,7 @@ class LH_EXPORT RenderTextureCommand : public RenderCommandBase
 {
 public:
 	virtual void Render();
-
-private:
-	void InitTexture();
+	virtual void Init_i();
 
 private:
 	Texture mTexture;

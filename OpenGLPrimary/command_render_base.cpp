@@ -24,6 +24,8 @@ void RenderCommandBase::Init()
 	gluPerspective(50.0f /*角度*/, 800 / 600/*画布宽高比*/, 0.1f/*最近看到的距离*/, 1000.0f/*最远看到的距离*/);//该函数影响当前矩阵，也可以说设置了当前矩阵
 	glMatrixMode(GL_MODELVIEW);//将当前矩阵设置成模型视口矩阵
 	glLoadIdentity();//不对模型视口矩阵做设置，加载一个单位矩阵
+
+	this->Init_i();
 }
 
 LH_NAMESPACE_END

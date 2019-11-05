@@ -25,7 +25,7 @@ void RenderTextureCommand::Render()
 	glPopMatrix();
 }
 
-void RenderTextureCommand::InitTexture()
+void RenderTextureCommand::Init_i()
 {
 	mTexture.Init("./res/test.bmp");
 }

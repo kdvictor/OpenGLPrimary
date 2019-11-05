@@ -8,7 +8,7 @@ void RenderObjModelCommand::Render()
 
 }
 
-void RenderObjModelCommand::InitObjmodel()
+void RenderObjModelCommand::Init_i()
 {
 	mObjModel.Init("./res/Quad.obj");
 }

@@ -89,13 +89,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	wglMakeCurrent(dc, rc); //使渲染环境生效
 
 	//初始化
-	LH::RenderCommandBase::Init();
 	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //擦除背景色
 
 	//command
-	//LH::RenderCommandBase* commandBase = new LH::RenderObjModelCommand();
-	LH::RenderObjModelCommand* commandBase = new LH::RenderObjModelCommand();
-	commandBase->InitObjmodel();
+	LH::RenderCommandBase* commandBase = new LH::RenderObjModelCommand();
+	commandBase->Init();
 	
 
 	//显示窗口

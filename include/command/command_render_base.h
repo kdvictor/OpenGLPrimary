@@ -29,8 +29,9 @@ public:
 	virtual void Render();
 
 public:
-	static void Init();
-	static void InitTexture();
+	void Init();
+
+	virtual void Init_i() {};
 };
 
 LH_NAMESPACE_END
