@@ -15,7 +15,8 @@ void ObjModel::Init(const char* objModel)
 	char onlineContent[256]; //一行数据
 	std::string temp;
 	std::vector<ObjOneLineData> positions, texttures, normals;
-
+	std::vector<VerticeDefine> vertexes;//去重之后的所有点
+	std::vector<int> indexs; //画图时，点与点之间的信息
 	while (!ssFileContent.eof())
 	{
 		memset(onlineContent, 0, 256);
@@ -29,12 +30,11 @@ void ObjModel::Init(const char* objModel)
 			case 'v':
 				if (*(onlineContent + 1) == 't')
 				{
-					ssObjOneLine >> temp;
+					ssObjOneLine >> temp; //去掉vt
 					ObjOneLineData data;
 					ssObjOneLine >> data.v[0];
 					ssObjOneLine >> data.v[1];
 					positions.push_back(data);
-					printf("texure:%f, %f\n", data.v[0], data.v[1]);
 				}
 				else if(*(onlineContent + 1) == 'n')
 				{
@@ -44,7 +44,6 @@ void ObjModel::Init(const char* objModel)
 					ssObjOneLine >> data.v[1];
 					ssObjOneLine >> data.v[2];
 					normals.push_back(data);
-					printf("normal:%f, %f, %f\n", data.v[0], data.v[1], data.v[2]);
 				}
 				else
 				{
@@ -54,12 +53,52 @@ void ObjModel::Init(const char* objModel)
 					ssObjOneLine >> data.v[1];
 					ssObjOneLine >> data.v[2];
 					positions.push_back(data);
-					printf("position:%f, %f, %f\n", data.v[0], data.v[1], data.v[2]);
 				}
 				break;
 			case 'f':
-				printf("face:%s\n", onlineContent);
+			{
+				ssObjOneLine >> temp;
+				std::string vertexStr;//: 1/1/1
+				for (int i = 0; i < 3; ++i)
+				{
+					ssObjOneLine >> vertexStr;
+					size_t pos1 = vertexStr.find_first_of('/');
+					std::string posIndexStr = vertexStr.substr(0, pos1);
+
+					size_t pos2 = vertexStr.find_first_of('/', pos1 + 1);
+					std::string vtextureIndexStr = vertexStr.substr(pos1 + 1, pos2 - 1 - pos1);
+
+					size_t pos3 = vertexStr.find_first_of('/', pos2 + 1);
+					std::string normalIndexStr = vertexStr.substr(pos2 + 1, vertexStr.length());
+
+					VerticeDefine vertexDefine;
+					vertexDefine.posiIndex = atoi(posIndexStr.c_str());
+					vertexDefine.texcoordIndex = atoi(vtextureIndexStr.c_str());
+					vertexDefine.normalIndex = atoi(normalIndexStr.c_str());
+
+					//去重
+					int currentIndex = -1;
+					for (int i = 0; i < vertexes.size(); ++i)
+					{
+						if (vertexes[i].posiIndex == vertexDefine.posiIndex &&
+							vertexes[i].texcoordIndex == vertexDefine.texcoordIndex &&
+							vertexes[i].normalIndex == vertexDefine.normalIndex)
+						{
+							currentIndex = i;
+							break;
+						}
+					}
+
+
+					if (currentIndex == -1)
+					{
+						currentIndex = vertexes.size();
+						vertexes.push_back(vertexDefine);
+					}
+					indexs.push_back(currentIndex);
+				}
 				break;
+			}
 			default:
 				break;
 			}

@@ -25,6 +25,13 @@ struct ObjOneLineData
 	float v[3];
 };
 
+struct VerticeDefine
+{
+	int posiIndex;
+	int texcoordIndex;
+	int normalIndex;
+};
+
 class LH_EXPORT ObjModel
 {
 public:
