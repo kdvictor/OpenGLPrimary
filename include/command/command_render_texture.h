@@ -27,7 +27,7 @@ public:
 	virtual void Render();
 
 private:
-	void InitTexture_i();
+	void InitTexture();
 
 private:
 	Texture mTexture;

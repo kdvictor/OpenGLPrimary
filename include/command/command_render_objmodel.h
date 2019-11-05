@@ -26,8 +26,8 @@ class LH_EXPORT RenderObjModelCommand : public RenderCommandBase
 public:
 	virtual void Render();
 
-private:
-	void InitObjmodel_i();
+public:
+	void InitObjmodel();
 
 private:
 	ObjModel mObjModel;

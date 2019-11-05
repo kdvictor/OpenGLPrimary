@@ -25,7 +25,6 @@ public:
 	static unsigned char* LoadFileContent(const char* pFilePath);
 
 	static unsigned char* DecodeBMP(unsigned char* bmpFileData, int& width, int& height);
-
 };
 
 LH_NAMESPACE_END

@@ -92,6 +92,12 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	LH::RenderCommandBase::Init();
 	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //擦除背景色
 
+	//command
+	//LH::RenderCommandBase* commandBase = new LH::RenderObjModelCommand();
+	LH::RenderObjModelCommand* commandBase = new LH::RenderObjModelCommand();
+	commandBase->InitObjmodel();
+	
+
 	//显示窗口
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd); //窗口显示出来有可能是脏的，需要刷新一次窗口
@@ -111,7 +117,6 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 		glClear(GL_COLOR_BUFFER_BIT); //擦除颜色缓冲区
 
-		LH::RenderCommandBase* commandBase = new LH::RenderObjModelCommand();
 		commandBase->Render();
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见

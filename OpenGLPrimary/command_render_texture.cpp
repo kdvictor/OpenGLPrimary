@@ -4,8 +4,6 @@ LH_NAMESPACE_BEGIN
 
 void RenderTextureCommand::Render()
 {
-	this->InitTexture_i();
-
 	glPushMatrix();
 
 	glEnable(GL_TEXTURE_2D);
@@ -27,7 +25,7 @@ void RenderTextureCommand::Render()
 	glPopMatrix();
 }
 
-void RenderTextureCommand::InitTexture_i()
+void RenderTextureCommand::InitTexture()
 {
 	mTexture.Init("./res/test.bmp");
 }
