@@ -157,6 +157,7 @@
     <ClInclude Include="..\include\context\objmodel.h" />
     <ClInclude Include="..\include\context\texture.h" />
     <ClInclude Include="..\include\context\context_helper.h" />
+    <ClInclude Include="..\include\context\vertex.h" />
     <ClInclude Include="common.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

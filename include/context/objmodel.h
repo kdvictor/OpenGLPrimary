@@ -16,8 +16,14 @@
 #define __OBJMODEL_H__
 
 #include "common_macrosh.h"
+#include "context/vertex.h"
 
 LH_NAMESPACE_BEGIN
+
+struct ObjOneLineData
+{
+	float v[3];
+};
 
 class LH_EXPORT ObjModel
 {
@@ -25,6 +31,9 @@ public:
 	void Init(const char* objModel);
 
 public:
+	VertexData* mVertexes;
+
+	int* mIndices;
 
 };
 

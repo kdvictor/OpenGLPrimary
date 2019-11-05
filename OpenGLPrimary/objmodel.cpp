@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <sstream>
+#include <string>
+#include <vector>
 #include "context/objmodel.h"
 #include "context/context_helper.h"
 
@@ -11,6 +13,9 @@ void ObjModel::Init(const char* objModel)
 	//找出有用的信息，V:顶点 Vt:纹理坐标 Vn：法线，f: face 
 	std::stringstream ssFileContent((char*)pFileContent);
 	char onlineContent[256]; //一行数据
+	std::string temp;
+	std::vector<ObjOneLineData> positions, texttures, normals;
+
 	while (!ssFileContent.eof())
 	{
 		memset(onlineContent, 0, 256);
@@ -18,20 +23,38 @@ void ObjModel::Init(const char* objModel)
 
 		if (strlen(onlineContent) > 0) //空行不读
 		{
+			std::stringstream ssObjOneLine(onlineContent);
 			switch (*onlineContent)
 			{
 			case 'v':
 				if (*(onlineContent + 1) == 't')
 				{
-					printf("texure:%s\n", onlineContent);
+					ssObjOneLine >> temp;
+					ObjOneLineData data;
+					ssObjOneLine >> data.v[0];
+					ssObjOneLine >> data.v[1];
+					positions.push_back(data);
+					printf("texure:%f, %f\n", data.v[0], data.v[1]);
 				}
 				else if(*(onlineContent + 1) == 'n')
 				{
-					printf("normal:%s\n", onlineContent);
+					ssObjOneLine >> temp;
+					ObjOneLineData data;
+					ssObjOneLine >> data.v[0];
+					ssObjOneLine >> data.v[1];
+					ssObjOneLine >> data.v[2];
+					normals.push_back(data);
+					printf("normal:%f, %f, %f\n", data.v[0], data.v[1], data.v[2]);
 				}
 				else
 				{
-					printf("vertex:%s\n", onlineContent);
+					ssObjOneLine >> temp;
+					ObjOneLineData data;
+					ssObjOneLine >> data.v[0];
+					ssObjOneLine >> data.v[1];
+					ssObjOneLine >> data.v[2];
+					positions.push_back(data);
+					printf("position:%f, %f, %f\n", data.v[0], data.v[1], data.v[2]);
 				}
 				break;
 			case 'f':
