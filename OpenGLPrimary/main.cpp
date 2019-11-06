@@ -113,7 +113,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		glClear(GL_COLOR_BUFFER_BIT); //²Á³ıÑÕÉ«»º³åÇø
+		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //²Á³ıÑÕÉ«»º³åÇø
 
 		commandBase->Render();
 
