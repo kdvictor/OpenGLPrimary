@@ -15,9 +15,12 @@
 #ifndef __COMMAND_RENDER_OBJMODEL_H__
 #define __COMMAND_RENDER_OBJMODEL_H__
 
+#include <windows.h>
+#include <gl/GL.h>
 #include "common_macrosh.h"
 #include "command/command_render_base.h"
 #include "context/objmodel.h"
+#include "context/texture.h"
 
 LH_NAMESPACE_BEGIN
 
@@ -30,6 +33,7 @@ public:
 
 private:
 	ObjModel mObjModel;
+	Texture mTexture;
 };
 
 LH_NAMESPACE_END
