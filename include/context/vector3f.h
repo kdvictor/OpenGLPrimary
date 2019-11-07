@@ -34,6 +34,12 @@ public:
 
 		float v[3];
 	};
+
+	Vector3f operator*(const float& scaler);
+	Vector3f operator+(const Vector3f& vector);
+	void operator=(const Vector3f& vector);
+	void Normalize();
+	float Magnitude();
 };
 
 LH_NAMESPACE_END

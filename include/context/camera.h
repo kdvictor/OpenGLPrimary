@@ -31,6 +31,8 @@ public:
 	Vector3f mUp;
 	bool mIsMoveLeft;
 	bool mIsMoveRight;
+	bool mIsMoveForward;
+	bool mIsMoveBackward;
 
 public:
 	void Update(float deltaTime);

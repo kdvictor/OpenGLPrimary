@@ -18,7 +18,7 @@ void RenderObjModelCommand::Render()
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, -5.0f); //???
 	glRotatef(angle, 0.0f, 1.0f, 0.0f);
-	glScalef(0.01f, 0.01f, 0.01f); //Àı∑≈
+	//glScalef(0.01f, 0.01f, 0.01f); //Àı∑≈
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, mTexture.mTextureId);
 	/**************π‚’’***************/
@@ -62,8 +62,8 @@ void RenderObjModelCommand::Render()
 
 void RenderObjModelCommand::Init_i()
 {
-	mObjModel.Init("./res/niutou.obj");
-	mTexture.Init("./res/niutou.bmp");
+	mObjModel.Init("./res/Sphere.obj");
+	mTexture.Init("./res/earth.bmp");
 }
 
 LH_NAMESPACE_END
