@@ -16,6 +16,8 @@ mIsMoveBackward(false)
 
 }
 
+//万向锁？？？？
+
 void Camera::Update(float deltaTime)
 {
 	//update everything
@@ -31,7 +33,7 @@ void Camera::Update(float deltaTime)
 		////mEye.x -= moveSpeed * deltaTime;
 		////mViewCenter.x -= moveSpeed * deltaTime;
 
-		//旋转
+		//左右旋转
 		float rotateSpeed = 0.1f;
 		RotateView_i(rotateSpeed*deltaTime, 0.0f, 1.0f, 0.0f);
 	}
@@ -56,7 +58,7 @@ void Camera::Update(float deltaTime)
 
 	if (mIsMoveBackward)
 	{
-		Vector3f backWardDirection(0.0f, 0.0f, 1.0f);
+		Vector3f backWardDirection(mUp.x, mUp.y, mUp.z);
 		backWardDirection.Normalize();
 		mEye = mEye + backWardDirection * moveSpeed * deltaTime;
 		mViewCenter = mViewCenter + backWardDirection * moveSpeed * deltaTime;
@@ -87,6 +89,18 @@ void Camera::RotateView_i(float angle, float x, float y, float z)
 
 	//旋转主要是改变 viewcenter的位置
 	mViewCenter = mEye + newDirection;
+}
+
+void Camera::Pitch(float angele)
+{
+	//计算向右的向量
+	Vector3f viewDirection = mViewCenter - mEye;
+	viewDirection.Normalize();
+
+	mUp.Normalize();
+	Vector3f rightDirection = viewDirection ^ mUp;
+	rightDirection.Normalize();
+	RotateView_i(angele, rightDirection.x, rightDirection.y, rightDirection.z);
 }
 
 

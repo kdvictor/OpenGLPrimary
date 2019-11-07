@@ -40,6 +40,7 @@ public:
 	float operator*(const Vector3f& vector);
 	Vector3f operator+(const Vector3f& vector);
 	Vector3f operator-(const Vector3f& vector);
+	Vector3f operator^(const Vector3f& vetor); //叉乘
 	void operator=(const Vector3f& vector);
 	void Normalize();
 	float Magnitude();

@@ -36,6 +36,7 @@ public:
 
 public:
 	void Update(float deltaTime);
+	void Pitch(float angele);
 
 private:
 	void RotateView_i(float angle, float x, float y, float z);

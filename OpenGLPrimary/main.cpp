@@ -18,7 +18,8 @@
 #include "context/camera.h"
 
 LH::Camera camera;
-
+POINT originalPos;
+bool isRotateView;
 /* 监听用户操作函数;LRESULT(函数返回值类型); CALLBACK(调用方式)
    hwnd(窗口句柄，用于标记用户操作了哪一个窗口); msg(消息ID，比如1表示用户拖拽了窗口);
    wParam(消息附带参数，比如用户拖拽窗口，具体拖到什么地方去了); lParam(消息附带参数)
@@ -28,10 +29,24 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	switch (msg)
 	{
 	case WM_MOUSEMOVE:
+		if (isRotateView)
+		{
+			camera.Pitch(-0.001);
+		}
 		break;
 	case WM_RBUTTONDOWN:
+		originalPos.x = LOWORD(lParam);
+		originalPos.y = HIWORD(lParam);
+		ClientToScreen(hwnd, &originalPos); //转成屏幕坐标
+		SetCapture(hwnd);
+		ShowCursor(false);
+		isRotateView = true;
 		break;
 	case WM_RBUTTONUP:
+		SetCursorPos(originalPos.x, originalPos.y);
+		ReleaseCapture();
+		ShowCursor(true);
+		isRotateView = false;
 		break;
 	case WM_KEYDOWN:
 		switch (wParam)
