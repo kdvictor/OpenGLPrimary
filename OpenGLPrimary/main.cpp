@@ -1,7 +1,8 @@
-
+#include <stdio.h>
 #include "common.h"
 #pragma comment(lib, "opengl32.lib") //可以在工程里面设置
 #pragma comment(lib, "glu32.lib")
+#pragma comment(lib, "winmm.lib") //timeGetTime
 
 #include "command/command_render_point.h"
 #include "command/command_render_line.h"
@@ -115,6 +116,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//用循环来保持窗口显示
 	MSG msg;
+	static float sTimeSinceStartUp = timeGetTime() / 1000.0f;
 	while (true)
 	{
 		if (PeekMessage(&msg, NULL, NULL, NULL, PM_REMOVE))
@@ -126,8 +128,12 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+		float currentTime = timeGetTime() / 1000.0f;
+		float timeElapse = currentTime - sTimeSinceStartUp;
+		sTimeSinceStartUp = currentTime;
+
 		//set up camera
-		camera.Update(0.016f);
+		camera.Update(timeElapse);
 
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //擦除颜色缓冲区
 

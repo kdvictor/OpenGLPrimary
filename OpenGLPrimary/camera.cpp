@@ -5,7 +5,11 @@
 
 LH_NAMESPACE_BEGIN
 
-Camera::Camera() : mEye(0.0f,0.0f,0.0f), mViewCenter(0.0f,0.0f,-1.0f), mUp(0.0f,1.0f,0.0f)
+Camera::Camera() : mEye(0.0f,0.0f,0.0f), 
+mViewCenter(0.0f,0.0f,-1.0f), 
+mUp(0.0f,1.0f,0.0f),
+mIsMoveLeft(false),
+mIsMoveRight(false)
 {
 
 }

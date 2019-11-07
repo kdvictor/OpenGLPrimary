@@ -29,6 +29,8 @@ public:
 	Vector3f mEye;
 	Vector3f mViewCenter;
 	Vector3f mUp;
+	bool mIsMoveLeft;
+	bool mIsMoveRight;
 
 public:
 	void Update(float deltaTime);
