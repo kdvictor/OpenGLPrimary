@@ -12,8 +12,8 @@
 ==============================
 */
 
-#ifndef __VECTOR3F_H__
-#define __VECTOR3F_H__
+#ifndef __CAMERA_H__
+#define __CAMERA_H__
 
 #include "context/vector3f.h"
 #include "common_macrosh.h"
