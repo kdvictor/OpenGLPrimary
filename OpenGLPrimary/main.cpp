@@ -34,8 +34,30 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_RBUTTONUP:
 		break;
 	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case 'A':
+			camera.mIsMoveLeft = true;
+			break;
+		case 'D':
+			camera.mIsMoveRight = true;
+			break;
+		default:
+			break;
+		}
 		break;
 	case WM_KEYUP:
+		switch (wParam)
+		{
+		case 'A':
+			camera.mIsMoveLeft = false;
+			break;
+		case 'D':
+			camera.mIsMoveRight = false;
+			break;
+		default:
+			break;
+		}
 		break;
 	case WM_CLOSE: //目前只关心退出窗口的消息
 		PostQuitMessage(0);
