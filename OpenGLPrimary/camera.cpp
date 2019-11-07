@@ -23,13 +23,17 @@ void Camera::Update(float deltaTime)
 	if (mIsMoveLeft)
 	{
 		//left direction vector
-		//eye和view center要一起移动
-		Vector3f leftDirection(-1.0f, 0.0f, 0.0f);
-		leftDirection.Normalize(); // ????????
-		mEye = mEye + leftDirection * moveSpeed * deltaTime;
-		mViewCenter = mViewCenter + leftDirection * moveSpeed * deltaTime;
-		//mEye.x -= moveSpeed * deltaTime;
-		//mViewCenter.x -= moveSpeed * deltaTime;
+		////eye和view center要一起移动
+		//Vector3f leftDirection(-1.0f, 0.0f, 0.0f);
+		//leftDirection.Normalize(); // ????????
+		//mEye = mEye + leftDirection * moveSpeed * deltaTime;
+		//mViewCenter = mViewCenter + leftDirection * moveSpeed * deltaTime;
+		////mEye.x -= moveSpeed * deltaTime;
+		////mViewCenter.x -= moveSpeed * deltaTime;
+
+		//旋转
+		float rotateSpeed = 0.1f;
+		RotateView_i(rotateSpeed*deltaTime, 0.0f, 1.0f, 0.0f);
 	}
 
 	if (mIsMoveRight)
@@ -62,6 +66,27 @@ void Camera::Update(float deltaTime)
 	gluLookAt(mEye.x, mEye.y, mEye.z, 
 		mViewCenter.x, mViewCenter.y, mViewCenter.z,
 		mUp.x, mUp.y, mUp.z);
+}
+
+//rotate view direction 视线：eye->viewcenter
+void Camera::RotateView_i(float angle, float x, float y, float z)
+{
+	Vector3f viewDirection = mViewCenter - mEye;
+	Vector3f newDirection;
+	float C = cosf(angle);
+	float S = sinf(angle);
+
+	Vector3f tempX(C + x * x*(1 - C), x*y*(1 - C) - z * S, x*z*(1 - C) + y * S);
+	newDirection.x = tempX * viewDirection;
+
+	Vector3f tempY(x*y*(1 - C) + z * S, C + y * y*(1 - C), y*z*(1 - C) - x * S);
+	newDirection.y = tempY * viewDirection;
+
+	Vector3f tempZ(x*z*(1 - C) - y * S, y*z*(1 - C) + x * S, C + z * z*(1 - C));
+	newDirection.z = tempZ * viewDirection;
+
+	//旋转主要是改变 viewcenter的位置
+	mViewCenter = mEye + newDirection;
 }
 
 

@@ -24,6 +24,7 @@ class LH_EXPORT Vector3f
 {
 public:
 	Vector3f(float x, float y, float z);
+	Vector3f();
 
 	union
 	{
@@ -36,7 +37,9 @@ public:
 	};
 
 	Vector3f operator*(const float& scaler);
+	float operator*(const Vector3f& vector);
 	Vector3f operator+(const Vector3f& vector);
+	Vector3f operator-(const Vector3f& vector);
 	void operator=(const Vector3f& vector);
 	void Normalize();
 	float Magnitude();

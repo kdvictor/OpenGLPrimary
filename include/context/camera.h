@@ -36,6 +36,9 @@ public:
 
 public:
 	void Update(float deltaTime);
+
+private:
+	void RotateView_i(float angle, float x, float y, float z);
 };
 
 LH_NAMESPACE_END
