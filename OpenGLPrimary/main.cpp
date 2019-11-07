@@ -14,6 +14,9 @@
 #include "command/command_render_pan_rotate_zoom_matrix_light.h"
 #include "command/command_render_texture.h"
 #include "command/command_render_objmodel.h"
+#include "context/camera.h"
+
+LH::Camera camera;
 
 /* 监听用户操作函数;LRESULT(函数返回值类型); CALLBACK(调用方式)
    hwnd(窗口句柄，用于标记用户操作了哪一个窗口); msg(消息ID，比如1表示用户拖拽了窗口);
@@ -23,9 +26,19 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
-		case WM_CLOSE: //目前只关心退出窗口的消息
-			PostQuitMessage(0);
-			return 0;
+	case WM_MOUSEMOVE:
+		break;
+	case WM_RBUTTONDOWN:
+		break;
+	case WM_RBUTTONUP:
+		break;
+	case WM_KEYDOWN:
+		break;
+	case WM_KEYUP:
+		break;
+	case WM_CLOSE: //目前只关心退出窗口的消息
+		PostQuitMessage(0);
+		return 0;
 	}
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
@@ -113,6 +126,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+		//set up camera
+		camera.Update(0.016f);
+
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //擦除颜色缓冲区
 
 		commandBase->Render();

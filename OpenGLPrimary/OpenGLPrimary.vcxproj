@@ -125,6 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="command_render_base.cpp" />
     <ClCompile Include="command_render_line.cpp" />
     <ClCompile Include="command_render_line_loop.cpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="objmodel.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="context_helper.cpp" />
+    <ClCompile Include="vector3f.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\command\command_render_base.h" />
@@ -154,9 +156,11 @@
     <ClInclude Include="..\include\command\command_render_tringlefan.h" />
     <ClInclude Include="..\include\command\command_render_tringles.h" />
     <ClInclude Include="..\include\common_macrosh.h" />
+    <ClInclude Include="..\include\context\camera.h" />
     <ClInclude Include="..\include\context\objmodel.h" />
     <ClInclude Include="..\include\context\texture.h" />
     <ClInclude Include="..\include\context\context_helper.h" />
+    <ClInclude Include="..\include\context\vector3f.h" />
     <ClInclude Include="..\include\context\vertex.h" />
     <ClInclude Include="common.h" />
   </ItemGroup>
