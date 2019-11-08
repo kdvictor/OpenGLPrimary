@@ -9,15 +9,15 @@ void RenderObjModelCommand::Render()
 	glEnable(GL_DEPTH_TEST);
 	//glPolygonMode(GL_FRONT, GL_LINE); //线框模式
 	//旋转角度
-	static float angle = 0.0;
-	if (angle > 360)
-	{
-		angle = 0.0f;
-	}
-	angle += 0.2f;
+	//static float angle = 0.0;
+	//if (angle > 360)
+	//{
+	//	angle = 0.0f;
+	//}
+	//angle += 0.2f;
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, -5.0f); //???
-	glRotatef(angle, 0.0f, 1.0f, 0.0f);
+	//glRotatef(angle, 0.0f, 1.0f, 0.0f);
 	//glScalef(0.01f, 0.01f, 0.01f); //缩放
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, mTexture.mTextureId);

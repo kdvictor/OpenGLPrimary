@@ -21,7 +21,7 @@ mIsMoveBackward(false)
 void Camera::Update(float deltaTime)
 {
 	//update everything
-	float moveSpeed = 1.0f;
+	float moveSpeed = 0.1f;
 	if (mIsMoveLeft)
 	{
 		//left direction vector
@@ -34,8 +34,12 @@ void Camera::Update(float deltaTime)
 		////mViewCenter.x -= moveSpeed * deltaTime;
 
 		//×óÓÒÐý×ª
-		float rotateSpeed = 0.1f;
-		RotateView_i(rotateSpeed*deltaTime, 0.0f, 1.0f, 0.0f);
+		Vector3f viewDirection = mViewCenter - mEye;
+		viewDirection.Normalize();
+		Vector3f rightDirection = viewDirection ^ mUp;
+		rightDirection.Normalize();
+		mEye = mEye + rightDirection * moveSpeed * deltaTime;
+		mViewCenter = mViewCenter + rightDirection * moveSpeed * deltaTime;
 	}
 
 	if (mIsMoveRight)

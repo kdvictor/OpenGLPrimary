@@ -29,24 +29,38 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	switch (msg)
 	{
 	case WM_MOUSEMOVE:
-		if (isRotateView)
-		{
-			camera.Pitch(-0.001);
-		}
+		//if (isRotateView)
+		//{
+		//	POINT currentPos;
+		//	currentPos.x = LOWORD(lParam);
+		//	currentPos.y = HIWORD(lParam);
+		//	ClientToScreen(hwnd, &currentPos);
+		//	int deltaX = currentPos.x - originalPos.x;
+		//	int deltaY = currentPos.y - originalPos.y;
+		//	float angle = (float)deltaY / 100000;
+		//	if (deltaY > 0)
+		//	{
+		//		camera.Pitch(angle);
+		//	}
+		//	else if (deltaY <0)
+		//	{
+		//		camera.Pitch(-angle);
+		//	}
+		//}
 		break;
 	case WM_RBUTTONDOWN:
-		originalPos.x = LOWORD(lParam);
-		originalPos.y = HIWORD(lParam);
-		ClientToScreen(hwnd, &originalPos); //转成屏幕坐标
-		SetCapture(hwnd);
-		ShowCursor(false);
-		isRotateView = true;
+		//originalPos.x = LOWORD(lParam);
+		//originalPos.y = HIWORD(lParam);
+		//ClientToScreen(hwnd, &originalPos); //转成屏幕坐标
+		//SetCapture(hwnd);
+		//ShowCursor(false);
+		//isRotateView = true;
 		break;
 	case WM_RBUTTONUP:
-		SetCursorPos(originalPos.x, originalPos.y);
-		ReleaseCapture();
-		ShowCursor(true);
-		isRotateView = false;
+		//SetCursorPos(originalPos.x, originalPos.y);
+		//ReleaseCapture();
+		//ShowCursor(true);
+		//isRotateView = false;
 		break;
 	case WM_KEYDOWN:
 		switch (wParam)
