@@ -30,16 +30,16 @@ void Camera::Update(float deltaTime)
 		//leftDirection.Normalize(); // ????????
 		//mEye = mEye + leftDirection * moveSpeed * deltaTime;
 		//mViewCenter = mViewCenter + leftDirection * moveSpeed * deltaTime;
-		////mEye.x -= moveSpeed * deltaTime;
-		////mViewCenter.x -= moveSpeed * deltaTime;
+		mEye.x -= moveSpeed * deltaTime;
+		mViewCenter.x -= moveSpeed * deltaTime;
 
 		//×óÓÒÐý×ª
-		Vector3f viewDirection = mViewCenter - mEye;
-		viewDirection.Normalize();
-		Vector3f rightDirection = viewDirection ^ mUp;
-		rightDirection.Normalize();
-		mEye = mEye + rightDirection * moveSpeed * deltaTime;
-		mViewCenter = mViewCenter + rightDirection * moveSpeed * deltaTime;
+		//Vector3f viewDirection = mViewCenter - mEye;
+		//viewDirection.Normalize();
+		//Vector3f rightDirection = viewDirection ^ mUp;
+		//rightDirection.Normalize();
+		//mEye = mEye + rightDirection * moveSpeed * deltaTime;
+		//mViewCenter = mViewCenter + rightDirection * moveSpeed * deltaTime;
 	}
 
 	if (mIsMoveRight)
