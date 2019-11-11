@@ -33,7 +33,7 @@ public:
 
 private:
 	ObjModel mObjModel;
-	Texture mTexture;
+	Texture* mTexture;
 };
 
 LH_NAMESPACE_END

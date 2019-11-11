@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "common.h"
+
 #pragma comment(lib, "opengl32.lib") //可以在工程里面设置
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "winmm.lib") //timeGetTime
@@ -16,6 +17,7 @@
 #include "command/command_render_texture.h"
 #include "command/command_render_objmodel.h"
 #include "context/camera.h"
+
 
 LH::Camera camera;
 POINT originalPos;

@@ -18,6 +18,8 @@
 #include <windows.h>
 #include <gl/GL.h> //注意：windows.h必须放在最前面
 #include "common_macrosh.h"
+#include <unordered_map>
+#include <string>
 
 LH_NAMESPACE_BEGIN
 
@@ -27,9 +29,11 @@ public:
 	Texture() {};
 	~Texture() {};
 	void Init(const char* pImagePath);
+	static Texture* LoadTextures(const char* pImagePath);
 
 public:
 	GLuint mTextureId; //gpu,通过此ID可以找到纹理
+	static std::unordered_map<std::string, Texture*> mTextures;
 
 };
 

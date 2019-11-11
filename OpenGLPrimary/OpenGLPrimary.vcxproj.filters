@@ -137,5 +137,8 @@
     <ClInclude Include="..\include\context\vector3f.h">
       <Filter>Header Files\context</Filter>
     </ClInclude>
+    <ClInclude Include="soil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

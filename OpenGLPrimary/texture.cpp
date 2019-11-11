@@ -2,10 +2,18 @@
 #include "context/context_helper.h"
 #include "common_macrosh.h"
 
+#include "soil.h"
+#pragma comment(lib, "soil.lib")
+
 LH_NAMESPACE_BEGIN
 
 void Texture::Init(const char* pImagePath)
 {
+	/*******************第一种方式加载**********************/
+	mTextureId = SOIL_load_OGL_texture(pImagePath, 0, 0, SOIL_FLAG_POWER_OF_TWO | SOIL_FLAG_INVERT_Y);
+	return;
+
+	/*******************第二种方式加载**********************/
 	//加载图片内容
 	unsigned char* pImageContent = nullptr;
 	pImageContent = ContextHelper::LoadFileContent(pImagePath);
@@ -42,5 +50,23 @@ void Texture::Init(const char* pImagePath)
 
 	DEL_PTR(pImageContent);
 }
+
+/**************************************************************************/
+
+std::unordered_map<std::string, Texture*> Texture::mTextures;
+
+Texture* Texture::LoadTextures(const char* pImagePath)
+{
+	if (mTextures.find(pImagePath) != mTextures.end())
+	{
+		return mTextures[pImagePath];
+	}
+
+	auto pTexture = new Texture();
+	pTexture->Init(pImagePath);
+	mTextures.insert(std::make_pair(pImagePath, pTexture));
+	return pTexture;
+}
+
 
 LH_NAMESPACE_END
