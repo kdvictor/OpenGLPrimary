@@ -27,7 +27,7 @@ public:
 	Texture* mBack;
 	Texture* mRight;
 	Texture* mLeft;
-	Texture* mUp;
+	Texture* mTop;
 	Texture* mBottom;
 
 	void Init(const char* pImagePath);

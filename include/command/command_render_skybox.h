@@ -20,17 +20,19 @@
 #include "common_macrosh.h"
 #include "command/command_render_base.h"
 #include "context/skybox.h"
-#include "context/texture.h"
 
 LH_NAMESPACE_BEGIN
 
 class LH_EXPORT RenderSkyBoxCommand : public RenderCommandBase
 {
 public:
+	~RenderSkyBoxCommand();
+
 	virtual void Render();
 
 	virtual void Init_i();
 
+public:
 	inline void SetCameraPosition(const float& x, const float& y, const float& z)
 	{
 		mX = x;
@@ -39,7 +41,7 @@ public:
 	}
 
 private:
-	Texture* mTexture;
+	SkyBox* mSkyBox;
 
 private:
 	float mX; //ÉãÏñ»úµÄÎ»ÖÃ

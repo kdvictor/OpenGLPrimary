@@ -174,6 +174,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//command
 	LH::RenderCommandBase* commandBase = new LH::RenderObjModelCommand();
 	commandBase->Init();
+
+	LH::RenderSkyBoxCommand* skyBoxCommand = new LH::RenderSkyBoxCommand();
+	skyBoxCommand->Init_i();
 	
 
 	//ÏÔÊ¾´°¿Ú
@@ -198,10 +201,13 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		float timeElapse = currentTime - sTimeSinceStartUp;
 		sTimeSinceStartUp = currentTime;
 
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //²Á³ıÑÕÉ«»º³åÇø
+
 		//set up camera
 		camera.Update(timeElapse);
 
-		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //²Á³ıÑÕÉ«»º³åÇø
+		skyBoxCommand->SetCameraPosition(camera.mEye.x, camera.mEye.y, camera.mEye.z);
+		skyBoxCommand->Render();
 
 		commandBase->Render();
 
