@@ -81,6 +81,12 @@
     <ClCompile Include="camera.cpp">
       <Filter>Source Files\context</Filter>
     </ClCompile>
+    <ClCompile Include="skybox.cpp">
+      <Filter>Source Files\context</Filter>
+    </ClCompile>
+    <ClCompile Include="command_render_skybox.cpp">
+      <Filter>Source Files\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -139,6 +145,12 @@
     </ClInclude>
     <ClInclude Include="soil.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\context\skybox.h">
+      <Filter>Header Files\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\command\command_render_skybox.h">
+      <Filter>Header Files\command</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

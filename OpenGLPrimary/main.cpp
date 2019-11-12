@@ -16,6 +16,7 @@
 #include "command/command_render_pan_rotate_zoom_matrix_light.h"
 #include "command/command_render_texture.h"
 #include "command/command_render_objmodel.h"
+#include "command/command_render_skybox.h"
 #include "context/camera.h"
 
 
