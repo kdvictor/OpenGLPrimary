@@ -30,9 +30,11 @@ public:
 	~Texture() {};
 	void Init(const char* pImagePath);
 	static Texture* LoadTextures(const char* pImagePath);
+	static void UnLoadTextures(Texture* pTexture);
 
 public:
 	GLuint mTextureId; //gpu,通过此ID可以找到纹理
+	std::string mImagePath;
 	static std::unordered_map<std::string, Texture*> mTextures;
 
 };

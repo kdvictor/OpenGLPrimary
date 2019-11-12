@@ -11,6 +11,7 @@ void Texture::Init(const char* pImagePath)
 {
 	/*******************第一种方式加载**********************/
 	mTextureId = SOIL_load_OGL_texture(pImagePath, 0, 0, SOIL_FLAG_POWER_OF_TWO | SOIL_FLAG_INVERT_Y);
+	mImagePath = pImagePath;
 	return;
 
 	/*******************第二种方式加载**********************/
@@ -68,5 +69,15 @@ Texture* Texture::LoadTextures(const char* pImagePath)
 	return pTexture;
 }
 
+void Texture::UnLoadTextures(Texture* pTexture)
+{
+	auto iter = mTextures.find(pTexture->mImagePath);
+	if (iter != mTextures.end())
+	{
+		mTextures.erase(pTexture->mImagePath);
+		glDeleteTextures(1, &(iter->second->mTextureId));
+		delete pTexture;
+	}
+}
 
 LH_NAMESPACE_END
