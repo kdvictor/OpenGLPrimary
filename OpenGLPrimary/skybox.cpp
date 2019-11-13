@@ -33,6 +33,45 @@ void SkyBox::Init(const char* pImagePath)
 	strcpy(temp, pImagePath);
 	strcat(temp, "/bottom.bmp");
 	mBottom = Texture::LoadTextures(temp);
+
+
+	mDisplayList.Init([&]() ->void {
+		//front
+		glBindTexture(GL_TEXTURE_2D, mFront->mTextureId);
+		glColor4ub(255, 255, 255, 255);
+		glBegin(GL_QUADS);
+
+		glTexCoord2f(0.0, 0.0); //纹理坐标
+		glVertex3f(-0.5f, -0.5f, -0.5f);
+		glTexCoord2f(1.0, 0.0);
+		glVertex3f(0.5f, -0.5f, -0.5f);
+
+		glTexCoord2f(1.0, 1.0);
+		glVertex3f(0.5f, 0.5f, -0.5f);
+
+		glTexCoord2f(0.0, 1.0);
+		glVertex3f(-0.5f, 0.5f, -0.5f);
+		glEnd();
+
+		//left
+		glBindTexture(GL_TEXTURE_2D, mLeft->mTextureId);
+		glBegin(GL_QUADS);
+
+		glTexCoord2f(0.0, 0.0); //纹理坐标
+		glVertex3f(-0.5f, -0.5f, 0.5f);
+
+		glTexCoord2f(1.0, 0.0);
+		glVertex3f(-0.5f, -0.5f, -0.5f);
+
+		glTexCoord2f(1.0, 1.0);
+		glVertex3f(-0.5f, 0.5f, -0.5f);
+
+		glTexCoord2f(0.0, 1.0);
+		glVertex3f(-0.5f, 0.5f, 0.5f);
+		glEnd();
+
+
+	});
 }
 
 

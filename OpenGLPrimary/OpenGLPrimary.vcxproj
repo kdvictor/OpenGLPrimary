@@ -142,6 +142,7 @@
     <ClCompile Include="command_render_tringlefan.cpp" />
     <ClCompile Include="command_render_tringles.cpp" />
     <ClCompile Include="command_render_tringlestrip.cpp" />
+    <ClCompile Include="displaylist.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="objmodel.cpp" />
     <ClCompile Include="skybox.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="..\include\command\command_render_tringles.h" />
     <ClInclude Include="..\include\common_macrosh.h" />
     <ClInclude Include="..\include\context\camera.h" />
+    <ClInclude Include="..\include\context\displaylist.h" />
     <ClInclude Include="..\include\context\objmodel.h" />
     <ClInclude Include="..\include\context\skybox.h" />
     <ClInclude Include="..\include\context\texture.h" />

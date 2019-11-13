@@ -17,6 +17,7 @@
 
 #include "common_macrosh.h"
 #include "texture.h"
+#include "context/displaylist.h"
 
 LH_NAMESPACE_BEGIN
 
@@ -29,6 +30,8 @@ public:
 	Texture* mLeft;
 	Texture* mTop;
 	Texture* mBottom;
+
+	DisplayList mDisplayList;
 
 	void Init(const char* pImagePath);
 };
