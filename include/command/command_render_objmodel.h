@@ -31,6 +31,8 @@ public:
 
 	virtual void Init_i();
 
+	Texture* GetTexure() const { return mTexture; }
+
 private:
 	ObjModel mObjModel;
 	Texture* mTexture;

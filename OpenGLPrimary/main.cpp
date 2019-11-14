@@ -18,6 +18,7 @@
 #include "command/command_render_objmodel.h"
 #include "command/command_render_skybox.h"
 #include "context/camera.h"
+#include "context/image_sprite.h"
 
 
 LH::Camera camera;
@@ -172,8 +173,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //擦除背景色
 
 	//command
-	LH::RenderCommandBase* commandBase = new LH::RenderObjModelCommand();
-	commandBase->Init();
+	LH::RenderObjModelCommand* objModelCommand = new LH::RenderObjModelCommand();
+	objModelCommand->Init();
 
 	LH::RenderSkyBoxCommand* skyBoxCommand = new LH::RenderSkyBoxCommand();
 	skyBoxCommand->Init_i();
@@ -188,19 +189,25 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	UpdateWindow(hwnd); //窗口显示出来有可能是脏的，需要刷新一次窗口
 
 	//使用顶点数组进行优化
-	float verters[] = { //假设这些顶点数据是从模型里面读出来的
-		-1 * (windowWidth / 2.0), -1 * (windowHeight / 2.0), 0.0f,
-		0.0f, -1 * (windowHeight / 2.0), 0.0f,
-		0.0f, 0.0f, 0.0f,
-		-1 * (windowWidth / 2.0), 0.0f, 0.0f
-	};
+	//float verters[] = { //假设这些顶点数据是从模型里面读出来的
+	//	-1 * (windowWidth / 2.0), -1 * (windowHeight / 2.0), 0.0f,
+	//	0.0f, -1 * (windowHeight / 2.0), 0.0f,
+	//	0.0f, 0.0f, 0.0f,
+	//	-1 * (windowWidth / 2.0), 0.0f, 0.0f
+	//};
 
-	float texcoords[] = {
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f
-	};
+	//float texcoords[] = {
+	//	0.0f, 0.0f,
+	//	1.0f, 0.0f,
+	//	1.0f, 1.0f,
+	//	0.0f, 1.0f
+	//};
+
+	//2d精灵
+	LH::ImageSprite imageSprite;
+	imageSprite.SetTexture(objModelCommand->GetTexure());
+	imageSprite.SetRect(0.0f, 0.0f, 100, 50);
+
 
 	//用循环来保持窗口显示
 	MSG msg;
@@ -229,7 +236,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		skyBoxCommand->SetCameraPosition(camera.mEye.x, camera.mEye.y, camera.mEye.z);
 		skyBoxCommand->Render();
 
-		commandBase->Render();
+		objModelCommand->Render();
 
 		//画2D图像，之前需要切换成2D的摄像机
 		camera.SwitchTo2D();
@@ -243,13 +250,16 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//glTexCoord2f(0.0, 1.0);
 		//glVertex3f(-1*(windowWidth / 2.0), 0.0f, 0.0f);
 		//glEnd();
-		glPushMatrix();
-		glEnableClientState(GL_VERTEX_ARRAY); //启动顶点数组
-		glVertexPointer(3/*一个点多少个数据*/, GL_FLOAT/*每个数据的类型*/, 0/*有没有间隔*/, verters/*源数据*/);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY); //启动纹理数组
-		glTexCoordPointer(2/*一个点多少个数据*/, GL_FLOAT/*每个数据的类型*/, 0/*有没有间隔*/, texcoords/*源数据*/);
-		glDrawArrays(GL_QUADS, 0/*从0号点开始画*/, 4/*画四个点*/);
-		glPopMatrix();
+		//顶点数组优化
+		//glPushMatrix();
+		//glEnableClientState(GL_VERTEX_ARRAY); //启动顶点数组
+		//glVertexPointer(3/*一个点多少个数据*/, GL_FLOAT/*每个数据的类型*/, 0/*有没有间隔*/, verters/*源数据*/);
+		//glEnableClientState(GL_TEXTURE_COORD_ARRAY); //启动纹理数组
+		//glTexCoordPointer(2/*一个点多少个数据*/, GL_FLOAT/*每个数据的类型*/, 0/*有没有间隔*/, texcoords/*源数据*/);
+		//glDrawArrays(GL_QUADS, 0/*从0号点开始画*/, 4/*画四个点*/);
+		//glPopMatrix();
+		//2D精灵封装
+		imageSprite.Draw();
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}

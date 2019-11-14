@@ -90,6 +90,9 @@
     <ClCompile Include="displaylist.cpp">
       <Filter>Source Files\context</Filter>
     </ClCompile>
+    <ClCompile Include="image_sprite.cpp">
+      <Filter>Source Files\context</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -156,6 +159,12 @@
       <Filter>Header Files\command</Filter>
     </ClInclude>
     <ClInclude Include="..\include\context\displaylist.h">
+      <Filter>Header Files\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\context\image_sprite.h">
+      <Filter>Header Files\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\context\list.h">
       <Filter>Header Files\context</Filter>
     </ClInclude>
   </ItemGroup>
