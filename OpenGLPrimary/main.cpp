@@ -187,6 +187,21 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd); //窗口显示出来有可能是脏的，需要刷新一次窗口
 
+	//使用顶点数组进行优化
+	float verters[] = { //假设这些顶点数据是从模型里面读出来的
+		-1 * (windowWidth / 2.0), -1 * (windowHeight / 2.0), 0.0f,
+		0.0f, -1 * (windowHeight / 2.0), 0.0f,
+		0.0f, 0.0f, 0.0f,
+		-1 * (windowWidth / 2.0), 0.0f, 0.0f
+	};
+
+	float texcoords[] = {
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f
+	};
+
 	//用循环来保持窗口显示
 	MSG msg;
 	static float sTimeSinceStartUp = timeGetTime() / 1000.0f;
@@ -218,16 +233,23 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		//画2D图像，之前需要切换成2D的摄像机
 		camera.SwitchTo2D();
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0, 0.0);
-		glVertex3f(-1*(windowWidth/2.0), -1*(windowHeight/2.0), 0.0f);
-		glTexCoord2f(1.0, 0.0);
-		glVertex3f(0.0f, -1*(windowHeight / 2.0), 0.0f);
-		glTexCoord2f(1.0, 1.0);
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glTexCoord2f(0.0, 1.0);
-		glVertex3f(-1*(windowWidth / 2.0), 0.0f, 0.0f);
-		glEnd();
+		//glBegin(GL_QUADS);
+		//glTexCoord2f(0.0, 0.0);
+		//glVertex3f(-1*(windowWidth/2.0), -1*(windowHeight/2.0), 0.0f);
+		//glTexCoord2f(1.0, 0.0);
+		//glVertex3f(0.0f, -1*(windowHeight / 2.0), 0.0f);
+		//glTexCoord2f(1.0, 1.0);
+		//glVertex3f(0.0f, 0.0f, 0.0f);
+		//glTexCoord2f(0.0, 1.0);
+		//glVertex3f(-1*(windowWidth / 2.0), 0.0f, 0.0f);
+		//glEnd();
+		glPushMatrix();
+		glEnableClientState(GL_VERTEX_ARRAY); //启动顶点数组
+		glVertexPointer(3/*一个点多少个数据*/, GL_FLOAT/*每个数据的类型*/, 0/*有没有间隔*/, verters/*源数据*/);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY); //启动纹理数组
+		glTexCoordPointer(2/*一个点多少个数据*/, GL_FLOAT/*每个数据的类型*/, 0/*有没有间隔*/, texcoords/*源数据*/);
+		glDrawArrays(GL_QUADS, 0/*从0号点开始画*/, 4/*画四个点*/);
+		glPopMatrix();
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}
