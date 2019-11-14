@@ -29,6 +29,13 @@ void ImageSprite::SetRect(const float& x, const float& y, const float& width, co
 void ImageSprite::Draw()
 {
 	glEnable(GL_TEXTURE_2D);
+	//去掉头像边框，一般是ALPHA通道造成，开启alpha测试或者使用混合
+	glDisable(GL_LIGHTING);
+	//glEnable(GL_ALPHA_TEST);
+	//glAlphaFunc(GL_GREATER, 0.1f); //<0.1不让画
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glPushMatrix();
 
 	glBindTexture(GL_TEXTURE_2D, mTexture->mTextureId);
@@ -51,6 +58,8 @@ void ImageSprite::Draw()
 
 	glEnd();
 	glPopMatrix();
+
+	glDisable(GL_BLEND);
 }
 
 LH_NAMESPACE_END

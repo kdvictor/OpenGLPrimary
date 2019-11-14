@@ -205,8 +205,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//2d精灵
 	LH::ImageSprite imageSprite;
-	imageSprite.SetTexture(objModelCommand->GetTexure());
-	imageSprite.SetRect(0.0f, 0.0f, 100, 50);
+	LH::Texture* textture = LH::Texture::LoadTextures("res/head.png");
+	imageSprite.SetTexture(textture);
+	imageSprite.SetRect(-200.0f, -200.0f, 100, 100);
 
 
 	//用循环来保持窗口显示
