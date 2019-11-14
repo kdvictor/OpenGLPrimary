@@ -33,10 +33,17 @@ public:
 	bool mIsMoveRight;
 	bool mIsMoveForward;
 	bool mIsMoveBackward;
+	/******2D,3DÉãÏñ»ú******/
+	int mViewPortWidth;
+	int mViewPortHeight;
 
 public:
 	void Update(float deltaTime);
 	void Pitch(float angele);
+
+	/******2D,3DÉãÏñ»ú******/
+	void SwitchTo3D();
+	void SwitchTo2D();
 
 private:
 	void RotateView_i(float angle, float x, float y, float z);

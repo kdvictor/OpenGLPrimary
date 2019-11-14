@@ -59,6 +59,7 @@ void RenderObjModelCommand::Render()
 	}
 
 	glEnd();
+
 	glPopMatrix();
 }
 

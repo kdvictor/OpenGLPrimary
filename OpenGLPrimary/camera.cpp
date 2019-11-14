@@ -107,5 +107,23 @@ void Camera::Pitch(float angele)
 	RotateView_i(angele, rightDirection.x, rightDirection.y, rightDirection.z);
 }
 
+void Camera::SwitchTo3D()
+{
+	glMatrixMode(GL_PROJECTION);//该函数可以设置当前矩阵，GL_PROJECTION:投影矩阵
+	glLoadIdentity();
+	gluPerspective(50.0f /*角度*/, mViewPortWidth / mViewPortHeight/*画布宽高比*/, 0.1f/*最近看到的距离*/, 1000.0f/*最远看到的距离*/);//该函数影响当前矩阵，也可以说设置了当前矩阵
+	glMatrixMode(GL_MODELVIEW);//将当前矩阵设置成模型视口矩阵
+	//glLoadIdentity();//不对模型视口矩阵做设置，加载一个单位矩阵
+
+}
+
+void Camera::SwitchTo2D()
+{
+	glMatrixMode(GL_PROJECTION);//该函数可以设置当前矩阵，GL_PROJECTION:投影矩阵
+	glLoadIdentity();
+	gluOrtho2D(-mViewPortWidth / 2, mViewPortWidth / 2, -mViewPortHeight / 2, mViewPortHeight / 2);
+	glMatrixMode(GL_MODELVIEW);//将当前矩阵设置成模型视口矩阵
+}
+
 
 LH_NAMESPACE_END

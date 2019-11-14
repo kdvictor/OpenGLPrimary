@@ -177,6 +177,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	LH::RenderSkyBoxCommand* skyBoxCommand = new LH::RenderSkyBoxCommand();
 	skyBoxCommand->Init_i();
+
+	//摄像机
+	camera.mViewPortWidth = windowWidth;
+	camera.mViewPortHeight = windowHeight;
 	
 
 	//显示窗口
@@ -201,6 +205,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		float timeElapse = currentTime - sTimeSinceStartUp;
 		sTimeSinceStartUp = currentTime;
 
+		camera.SwitchTo3D();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //擦除颜色缓冲区，glClear(GL_DEPTH_BUFFER_BIT)：深度值全部变成1.0，范围0~1
 
 		//set up camera
@@ -210,6 +215,19 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		skyBoxCommand->Render();
 
 		commandBase->Render();
+
+		//画2D图像，之前需要切换成2D的摄像机
+		camera.SwitchTo2D();
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0);
+		glVertex3f(-1*(windowWidth/2.0), -1*(windowHeight/2.0), 0.0f);
+		glTexCoord2f(1.0, 0.0);
+		glVertex3f(0.0f, -1*(windowHeight / 2.0), 0.0f);
+		glTexCoord2f(1.0, 1.0);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glTexCoord2f(0.0, 1.0);
+		glVertex3f(-1*(windowWidth / 2.0), 0.0f, 0.0f);
+		glEnd();
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}
