@@ -19,6 +19,7 @@
 #include "command/command_render_skybox.h"
 #include "context/camera.h"
 #include "context/image_sprite.h"
+#include "context/ground.h"
 
 
 LH::Camera camera;
@@ -210,6 +211,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	imageSprite.SetRect(-200.0f, -200.0f, 100, 100);
 
 
+	//地面
+	LH::Ground ground;
+	ground.Init();
+
 	//用循环来保持窗口显示
 	MSG msg;
 	static float sTimeSinceStartUp = timeGetTime() / 1000.0f;
@@ -237,6 +242,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		skyBoxCommand->SetCameraPosition(camera.mEye.x, camera.mEye.y, camera.mEye.z);
 		skyBoxCommand->Render();
 
+		//地面
+		ground.Draw();
+
+		//地球
 		objModelCommand->Render();
 
 		//画2D图像，之前需要切换成2D的摄像机

@@ -93,6 +93,9 @@
     <ClCompile Include="image_sprite.cpp">
       <Filter>Source Files\context</Filter>
     </ClCompile>
+    <ClCompile Include="ground.cpp">
+      <Filter>Source Files\context</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -165,6 +168,9 @@
       <Filter>Header Files\context</Filter>
     </ClInclude>
     <ClInclude Include="..\include\context\list.h">
+      <Filter>Header Files\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\context\ground.h">
       <Filter>Header Files\context</Filter>
     </ClInclude>
   </ItemGroup>

@@ -34,7 +34,11 @@ void ImageSprite::Draw()
 	//glEnable(GL_ALPHA_TEST);
 	//glAlphaFunc(GL_GREATER, 0.1f); //<0.1不让画
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA/*源：当前的图像*/, GL_ONE_MINUS_SRC_ALPHA/*目的：已经存在的图像*/);
+	//混合：dst = src.apha*salpha + dst.alpha*dalpha;
+	//GL_SRC_ALPHA:salpha = src.alpha
+	//GL_ONE_MINUS_SRC_ALPHA: dalpha = 1-src.alpha
+
 
 	glPushMatrix();
 
