@@ -5,8 +5,8 @@ LH_NAMESPACE_BEGIN
 
 void RenderObjModelCommand::Render()
 {
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_CULL_FACE);
+	//glEnable(GL_DEPTH_TEST);
 	//glPolygonMode(GL_FRONT, GL_LINE); //线框模式
 	//旋转角度
 	//static float angle = 0.0;
@@ -15,8 +15,8 @@ void RenderObjModelCommand::Render()
 	//	angle = 0.0f;
 	//}
 	//angle += 0.2f;
-	glEnable(GL_LIGHTING);
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_LIGHTING);
+	//glEnable(GL_DEPTH_TEST);
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, -5.0f); //???
 	//glRotatef(angle, 0.0f, 1.0f, 0.0f);
