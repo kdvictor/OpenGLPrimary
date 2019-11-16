@@ -205,10 +205,16 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//};
 
 	//2d精灵
+	//LH::ImageSprite imageSprite;
+	//LH::Texture* textture = LH::Texture::LoadTextures("res/head.png");
+	//imageSprite.SetTexture(textture);
+	//imageSprite.SetRect(-200.0f, -200.0f, 100, 100);
+	//自己生成texture:生成粒子
 	LH::ImageSprite imageSprite;
-	LH::Texture* textture = LH::Texture::LoadTextures("res/head.png");
+	LH::Texture* textture = new LH::Texture();
+	textture->CreateTexture(256);
 	imageSprite.SetTexture(textture);
-	imageSprite.SetRect(-200.0f, -200.0f, 100, 100);
+	imageSprite.SetRect(-200.0f, -200.0f, 20.f, 20.f);
 
 
 	//地面

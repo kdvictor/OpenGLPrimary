@@ -80,4 +80,39 @@ void Texture::UnLoadTextures(Texture* pTexture)
 	}
 }
 
+void Texture::CreateTexture(int size)
+{
+	unsigned char* pImageData = new unsigned char[size*size*4];
+	float maxDistance = sqrt(size*size + size * size);
+	float centerX = size / 2.0f;
+	float centerY = size / 2.0f;
+	for (int y = 0; y < size; ++y)
+	{
+		for (int x = 0; x <size; ++x)
+		{
+			float deltaX = static_cast<float>(x) - centerX;
+			float deltaY = static_cast<float>(y) - centerY;
+			float distance = sqrt(deltaX*deltaX + deltaY * deltaY);
+			float alpha = powf(1 - (distance / maxDistance), 8.0f);
+			alpha > 1 ? 1 : alpha;
+			int currentPixelOffeset = (x+y*size)*4/*RGBA*/;
+			pImageData[currentPixelOffeset] = 255;
+			pImageData[currentPixelOffeset + 1] = 255;
+			pImageData[currentPixelOffeset + 2] = 255;
+			pImageData[currentPixelOffeset + 3] = static_cast<unsigned char>(alpha * 255);
+		}
+	}
+
+	glGenTextures(1, &mTextureId);
+	glBindTexture(GL_TEXTURE_2D, mTextureId);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, size, size, 0, GL_RGBA, GL_UNSIGNED_BYTE, pImageData);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	DEL_PTR(pImageData);
+}
+
 LH_NAMESPACE_END

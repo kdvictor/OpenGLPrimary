@@ -31,6 +31,7 @@ public:
 	void Init(const char* pImagePath);
 	static Texture* LoadTextures(const char* pImagePath);
 	static void UnLoadTextures(Texture* pTexture);
+	void CreateTexture(int size);
 
 public:
 	GLuint mTextureId; //gpu,通过此ID可以找到纹理

@@ -177,7 +177,11 @@
     <ClInclude Include="..\include\context\vector3f.h" />
     <ClInclude Include="..\include\context\vertex.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="soil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OpenGLPrimary.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
