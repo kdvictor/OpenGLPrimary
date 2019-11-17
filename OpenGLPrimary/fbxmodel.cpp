@@ -22,11 +22,38 @@ void FBXModel::ImportMesh(FbxMesh* mesh)
 	std::vector<Vector3f> positions;
 	ImportPositions_i(mesh, positions);
 
-	//indices
+	int polygonCount = mesh->GetPolygonCount(); //三角形个数
 
-	//normal
+	FbxStringList uvSetNames;
+	mesh->GetUVSetNames(uvSetNames);
 
-	//textcoord
+	for (int i = 0; i < polygonCount; ++i)
+	{
+		int currentPolygonIndexCount = mesh->GetPolygonSize(i); //3(三角形)
+
+		for (int j = 0; j < currentPolygonIndexCount; ++j)
+		{
+			int vertexIndex = mesh->GetPolygonVertex(i, j);
+			//fbx position -> our position
+			printf("%f,%f,%f\n", positions[vertexIndex].x, positions[vertexIndex].y, positions[vertexIndex].z);
+
+			//fbx normal -> our normal
+			FbxVector4 normal;
+			if (mesh->GetPolygonVertexNormal(i, j, normal))
+			{
+				printf("%f,%f,%f\n", normal.mData[0], normal.mData[1], normal.mData[1]);
+			}
+
+			//fbx texcoord -> our texcoord
+			FbxVector2 uv;
+			bool bFlag = true;
+			if (mesh->GetPolygonVertexUV(i, j, uvSetNames.GetItemAt(0)->mString.Buffer(),uv, bFlag));
+			{
+				printf("%f, %f\n", uv.mData[0], uv.mData[1]);
+			}
+		}
+
+	}
 }
 
 void FBXModel::ImportMaterial(FbxNode* node)
