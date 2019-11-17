@@ -257,18 +257,21 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ground.Draw();
 
 		//镜像
-		glDisable(GL_DEPTH_TEST);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_COLOR, GL_ONE);
-		glPushMatrix();
-		glTranslatef(0.0f, -2.0f, 0.0f);
-		glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
-		objModelCommand->Render();
-		glPopMatrix();
-		glEnable(GL_DEPTH_TEST);
-		glDisable(GL_BLEND);
-		//地球
-		objModelCommand->Render();
+		//glDisable(GL_DEPTH_TEST);
+		//glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_COLOR, GL_ONE);
+		//glPushMatrix();
+		//glTranslatef(0.0f, -2.0f, 0.0f);
+		//glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+		//objModelCommand->Render();
+		//glPopMatrix();
+		//glEnable(GL_DEPTH_TEST);
+		//glDisable(GL_BLEND);
+		////地球
+		//objModelCommand->Render();
+
+		//Fbx
+		fbxModel.Draw();
 
 		//glViewport(0, windowHeight / 2, windowWidth / 2, windowHeight / 2);//规定画画的区域,多视口
 		//画2D图像，之前需要切换成2D的摄像机
@@ -294,9 +297,6 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//glPopMatrix();
 		//2D精灵封装
 		imageSprite.Draw();
-
-		//Fbx
-		fbxModel.Draw();
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}

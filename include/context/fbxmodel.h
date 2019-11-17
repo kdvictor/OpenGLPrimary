@@ -57,6 +57,8 @@ public:
 
 	std::unordered_map<int, int> mMaterialIndexes;
 
+	std::vector<std::vector<int>> mIndices;
+
 private:
 	void ImportPositions_i(FbxGeometryBase* geometry, std::vector<Vector3f>& positions);
 

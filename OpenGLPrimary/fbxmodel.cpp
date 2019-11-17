@@ -38,6 +38,38 @@ void FBXModel::ImportMesh(FbxMesh* mesh)
 		polygonIndexCount += mesh->GetPolygonSize(i);
 	}
 
+	//indices
+	FbxLayerElementArrayTemplate<int>*pMaterialIndices;
+	mesh->GetMaterialIndices(&pMaterialIndices);
+	FbxGeometryElement::EMappingMode mode = mesh->GetElementMaterial()->GetMappingMode();
+	mIndices.resize(mMaterials.size());
+	switch (mode)
+	{
+	case fbxsdk::FbxLayerElement::eNone:
+		break;
+	case fbxsdk::FbxLayerElement::eByControlPoint:
+		break;
+	case fbxsdk::FbxLayerElement::eByPolygonVertex:
+		break;
+	case fbxsdk::FbxLayerElement::eByPolygon:
+	{
+		for (int i = 0; i < polygonCount; ++i)
+		{
+			//
+			int materialIndex = pMaterialIndices->GetAt(i);
+			int materialRef = mMaterialIndexes[materialIndex];
+			mIndices[materialRef].push_back(i * 3);
+			mIndices[materialRef].push_back(i * 3 + 1);
+			mIndices[materialRef].push_back(i * 3 + 2);
+		}
+	}
+	break;
+	case fbxsdk::FbxLayerElement::eByEdge:
+		break;
+	case fbxsdk::FbxLayerElement::eAllSame:
+		break;
+	}
+
 	mVertexs = new VertexData[polygonIndexCount];
 	int currentVerticeIndex = 0;
 	for (int i = 0; i < polygonCount; ++i)
@@ -187,7 +219,24 @@ void FBXModel::Init(const char* const& filePath)
 
 void FBXModel::Draw()
 {
-
+	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, -5.0f);
+	glScalef(0.01f, 0.01f, 0.01f);
+	for (int i = 0; i < mMaterials.size(); i++)
+	{
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0.01F);
+		glBindTexture(GL_TEXTURE_2D, mMaterials[i]->mtexture->mTextureId);
+		glBegin(GL_TRIANGLES);
+		for (int j = 0; j < mIndices[i].size(); ++j)
+		{
+			glTexCoord2fv(mVertexs[mIndices[i][j]].mTexcoord);
+			glVertex3fv(mVertexs[mIndices[i][j]].mPosition);
+		}
+		glEnd();
+	}
+	glPopMatrix();
+	glDisable(GL_ALPHA_TEST);
 }
 
 
