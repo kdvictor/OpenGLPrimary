@@ -16,17 +16,30 @@
 #define __FBXMODEL_H__
 
 #include <windows.h>
+#include <vector>
 #include "gl/GL.h"
 #include "common_macrosh.h"
+#include "fbxsdk.h"
+#include "context/vector3f.h"
+
 
 LH_NAMESPACE_BEGIN
 
 class LH_EXPORT FBXModel
 {
+protected:
+	void ImportNode(FbxNode* node);
+
+	void ImportMaterial(FbxNode* node);
+
+	void ImportMesh(FbxMesh* mesh);
 public:
 	void Init(const char* const& filePath);
 
 	void Draw();
+
+private:
+	void ImportPositions_i(FbxGeometryBase* geometry, std::vector<Vector3f>& positions);
 };
 
 LH_NAMESPACE_END

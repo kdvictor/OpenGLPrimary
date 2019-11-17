@@ -224,7 +224,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//FBX
 	LH::FBXModel fbxModel;
-	fbxModel.Init("");
+	fbxModel.Init("res/cube.fbx");
 
 	//用循环来保持窗口显示
 	MSG msg;
