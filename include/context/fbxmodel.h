@@ -17,6 +17,7 @@
 
 #include <windows.h>
 #include <vector>
+#include <unordered_map>
 #include "gl/GL.h"
 #include "common_macrosh.h"
 #include "fbxsdk.h"
@@ -25,6 +26,12 @@
 
 
 LH_NAMESPACE_BEGIN
+
+struct Mat
+{
+	int mType; //0:lambert, 1:phong, other:lambert
+	char mDiffuseColorTexture[256]; //漫反射纹理，这里只考虑这种纹理，因为是牛头人，很多东西被省略了
+};
 
 class LH_EXPORT FBXModel
 {
@@ -41,6 +48,12 @@ public:
 
 public:
 	VertexData* mVertexs;
+
+	char mFBXPath[256];
+
+	std::vector<Mat*> mMaterials; //unique mat
+
+	std::unordered_map<int, int> mMaterialIndexes;
 
 private:
 	void ImportPositions_i(FbxGeometryBase* geometry, std::vector<Vector3f>& positions);
