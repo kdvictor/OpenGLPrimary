@@ -96,6 +96,9 @@
     <ClCompile Include="ground.cpp">
       <Filter>Source Files\context</Filter>
     </ClCompile>
+    <ClCompile Include="fbxmodel.cpp">
+      <Filter>Source Files\context</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\context\fbxmodel.h">
+      <Filter>Header Files\context</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

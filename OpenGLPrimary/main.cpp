@@ -20,6 +20,7 @@
 #include "context/camera.h"
 #include "context/image_sprite.h"
 #include "context/ground.h"
+#include "context/fbxmodel.h"
 
 
 LH::Camera camera;
@@ -221,6 +222,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	LH::Ground ground;
 	ground.Init();
 
+	//FBX
+	LH::FBXModel fbxModel;
+	fbxModel.Init("");
+
 	//用循环来保持窗口显示
 	MSG msg;
 	static float sTimeSinceStartUp = timeGetTime() / 1000.0f;
@@ -289,6 +294,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//glPopMatrix();
 		//2D精灵封装
 		imageSprite.Draw();
+
+		//Fbx
+		fbxModel.Draw();
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}

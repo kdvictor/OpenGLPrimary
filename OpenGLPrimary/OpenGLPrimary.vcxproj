@@ -85,7 +85,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;F:\FBX\2020.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <PreBuildEvent>
@@ -96,7 +96,8 @@
       <Command>editbin /subsystem:console $(OutDir)$(ProjectName).exe</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libfbxsdk-md.lib;libfbxsdk.lib;zlib-md.lib;libxml2-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\FBX\2020.0\lib\vs2017\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -143,6 +144,7 @@
     <ClCompile Include="command_render_tringles.cpp" />
     <ClCompile Include="command_render_tringlestrip.cpp" />
     <ClCompile Include="displaylist.cpp" />
+    <ClCompile Include="fbxmodel.cpp" />
     <ClCompile Include="ground.cpp" />
     <ClCompile Include="image_sprite.cpp" />
     <ClCompile Include="main.cpp" />
@@ -167,6 +169,7 @@
     <ClInclude Include="..\include\common_macrosh.h" />
     <ClInclude Include="..\include\context\camera.h" />
     <ClInclude Include="..\include\context\displaylist.h" />
+    <ClInclude Include="..\include\context\fbxmodel.h" />
     <ClInclude Include="..\include\context\ground.h" />
     <ClInclude Include="..\include\context\image_sprite.h" />
     <ClInclude Include="..\include\context\list.h" />
