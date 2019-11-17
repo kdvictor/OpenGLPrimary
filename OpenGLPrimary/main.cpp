@@ -244,6 +244,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		float timeElapse = currentTime - sTimeSinceStartUp;
 		sTimeSinceStartUp = currentTime;
 
+		//剪刀
+		//glEnable(GL_SCISSOR_TEST);
+		//glScissor(0, 0, windowWidth / 2, windowHeight);
+
 		camera.SwitchTo3D();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //擦除颜色缓冲区，glClear(GL_DEPTH_BUFFER_BIT)：深度值全部变成1.0，范围0~1
 
@@ -257,18 +261,18 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ground.Draw();
 
 		//镜像
-		//glDisable(GL_DEPTH_TEST);
-		//glEnable(GL_BLEND);
-		//glBlendFunc(GL_SRC_COLOR, GL_ONE);
-		//glPushMatrix();
-		//glTranslatef(0.0f, -2.0f, 0.0f);
-		//glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
-		//objModelCommand->Render();
-		//glPopMatrix();
-		//glEnable(GL_DEPTH_TEST);
-		//glDisable(GL_BLEND);
-		////地球
-		//objModelCommand->Render();
+		glDisable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_COLOR, GL_ONE);
+		glPushMatrix();
+		glTranslatef(0.0f, -2.0f, 0.0f);
+		glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
+		objModelCommand->Render();
+		glPopMatrix();
+		glEnable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
+		//地球
+		objModelCommand->Render();
 
 		//Fbx
 		fbxModel.Draw();
