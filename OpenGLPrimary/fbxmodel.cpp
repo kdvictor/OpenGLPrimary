@@ -27,6 +27,14 @@ void FBXModel::ImportMesh(FbxMesh* mesh)
 	FbxStringList uvSetNames;
 	mesh->GetUVSetNames(uvSetNames);
 
+	int polygonIndexCount = 0;
+	for (int i = 0; i < polygonIndexCount; ++i)
+	{
+		polygonIndexCount += mesh->GetPolygonSize(i); //一般都是加三
+	}
+
+	mVertexs = new VertexData[polygonIndexCount];
+	int currentVertexIndex = 0;
 	for (int i = 0; i < polygonCount; ++i)
 	{
 		int currentPolygonIndexCount = mesh->GetPolygonSize(i); //3(三角形)
@@ -35,13 +43,17 @@ void FBXModel::ImportMesh(FbxMesh* mesh)
 		{
 			int vertexIndex = mesh->GetPolygonVertex(i, j);
 			//fbx position -> our position
-			printf("%f,%f,%f\n", positions[vertexIndex].x, positions[vertexIndex].y, positions[vertexIndex].z);
+			mVertexs[currentVertexIndex].mPosition[0] = positions[vertexIndex].x;
+			mVertexs[currentVertexIndex].mPosition[1] = positions[vertexIndex].y;
+			mVertexs[currentVertexIndex].mPosition[2] = positions[vertexIndex].z;
 
 			//fbx normal -> our normal
 			FbxVector4 normal;
 			if (mesh->GetPolygonVertexNormal(i, j, normal))
 			{
-				printf("%f,%f,%f\n", normal.mData[0], normal.mData[1], normal.mData[1]);
+				mVertexs[currentVertexIndex].mNormal[0] = normal.mData[0];
+				mVertexs[currentVertexIndex].mNormal[1] = normal.mData[1];
+				mVertexs[currentVertexIndex].mNormal[2] = normal.mData[2];
 			}
 
 			//fbx texcoord -> our texcoord
@@ -49,10 +61,11 @@ void FBXModel::ImportMesh(FbxMesh* mesh)
 			bool bFlag = true;
 			if (mesh->GetPolygonVertexUV(i, j, uvSetNames.GetItemAt(0)->mString.Buffer(),uv, bFlag));
 			{
-				printf("%f, %f\n", uv.mData[0], uv.mData[1]);
+				mVertexs[currentVertexIndex].mTexcoord[0] = uv.mData[0];
+				mVertexs[currentVertexIndex].mTexcoord[1] = uv.mData[1];
 			}
+			currentVertexIndex++;
 		}
-
 	}
 }
 

@@ -21,6 +21,7 @@
 #include "common_macrosh.h"
 #include "fbxsdk.h"
 #include "context/vector3f.h"
+#include "context/vertex.h"
 
 
 LH_NAMESPACE_BEGIN
@@ -37,6 +38,9 @@ public:
 	void Init(const char* const& filePath);
 
 	void Draw();
+
+public:
+	VertexData* mVertexs;
 
 private:
 	void ImportPositions_i(FbxGeometryBase* geometry, std::vector<Vector3f>& positions);
