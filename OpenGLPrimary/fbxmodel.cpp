@@ -3,6 +3,12 @@
 
 LH_NAMESPACE_BEGIN
 
+void FBXModel::GetMaterialPath_i(char* filePath)
+{
+	memset(filePath + strlen(filePath) - 4, 0, 4);
+	strcat(filePath, ".fbm/");
+}
+
 void FBXModel::ImportPositions_i(FbxGeometryBase* geometry, std::vector<Vector3f>& positions)
 {
 	int controlPointCount = geometry->GetControlPointsCount();
@@ -70,19 +76,23 @@ void FBXModel::ImportMesh(FbxMesh* mesh)
 
 void FBXModel::ImportMaterial(FbxNode* node)
 {
+	char szFBXTextureDir[256] = { 0 };
+	strcpy(szFBXTextureDir, mFBXPath);
+	GetMaterialPath_i(szFBXTextureDir); //ÎÆÀíÍ¼Æ¬Â·¾¶
+
 	int materialCount = node->GetMaterialCount();
-	printf("%d\n", materialCount);
 	FbxProperty property;
+	int nType = 0;
 	for (int i = 0; i < materialCount; ++i)
 	{
 		FbxSurfaceMaterial* surfaceMat = node->GetMaterial(i);
 		if (FbxSurfaceLambert::ClassId == surfaceMat->GetClassId())
 		{
-			printf("lambert, %s\n", surfaceMat->GetName());
+			nType = 0;
 		}
 		else if (FbxSurfacePhong::ClassId == surfaceMat->GetClassId())
 		{
-			printf("phong, %s\n", surfaceMat->GetName());
+			nType = 1;
 		}
 		else
 		{
@@ -93,9 +103,36 @@ void FBXModel::ImportMaterial(FbxNode* node)
 		{
 			int textureCount = property.GetSrcObjectCount<FbxTexture>();
 			FbxTexture* texture = property.GetSrcObject<FbxTexture>();
+			int currentMaterialIndex = -1;
 			if (texture)
 			{
-				printf("%s\n", texture->GetName());
+				int currentMatCount = mMaterials.size();
+				for (int k = 0; k < currentMatCount; ++k)
+				{
+					if (nType == mMaterials[k]->mType)
+					{
+						if (strcmp(texture->GetName(), mMaterials[k]->mDiffuseColorTexture) == 0)
+						{
+							currentMaterialIndex = k;
+							break;
+						}
+					}
+				}
+
+				if (currentMaterialIndex == -1)
+				{
+					Mat* mat = new Mat;
+					mat->mType = nType;
+					memset(mat->mDiffuseColorTexture, 0, 256);
+					strcpy(mat->mDiffuseColorTexture, texture->GetName());
+					char temp[256] = { 0 };
+					strcpy(temp, szFBXTextureDir);
+					strcat(temp, texture->GetName());
+					mat->mtexture = Texture::LoadTextures(temp);
+					currentMaterialIndex = mMaterials.size();
+					mMaterials.push_back(mat);
+				}
+				mMaterialIndexes.insert(std::make_pair(i, currentMaterialIndex));
 			}
 		}
 	}
@@ -107,6 +144,14 @@ void FBXModel::ImportNode(FbxNode* node)
 	if (node->GetMesh())
 	{
 		ImportMaterial(node);
+		for (auto iter = mMaterials.begin(); iter != mMaterials.end(); ++iter)
+		{
+			printf("%d %s\n", (*iter)->mType, (*iter)->mDiffuseColorTexture);
+		}
+		for (auto iter = mMaterialIndexes.begin(); iter != mMaterialIndexes.end(); ++iter)
+		{
+			printf("mat index %d -> %d\n", iter->first, iter->second);
+		}
 		ImportMesh(node->GetMesh());
 	}
 	//decode child
@@ -119,6 +164,8 @@ void FBXModel::ImportNode(FbxNode* node)
 
 void FBXModel::Init(const char* const& filePath)
 {
+	memset(mFBXPath, 0, 256);
+	strcpy(mFBXPath, filePath);
 	FbxManager*fbxManager = FbxManager::Create();
 	FbxIOSettings*fbxIOSetting = FbxIOSettings::Create(fbxManager, IOSROOT);
 	FbxImporter*fbxImporter = FbxImporter::Create(fbxManager, "");
