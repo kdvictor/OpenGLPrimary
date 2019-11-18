@@ -217,6 +217,13 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	imageSprite.SetTexture(textture);
 	imageSprite.SetRect(-200.0f, -200.0f, 20.f, 20.f);
 
+	//绘制文字
+	GLuint mTexts;
+	mTexts = glGenLists(96);
+	HFONT hFont = CreateFontA(24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Arial");
+	SelectObject(dc, hFont);
+	wglUseFontBitmapsA(dc, 32, 96, mTexts);
+
 
 	//地面
 	LH::Ground ground;
@@ -301,6 +308,12 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//glPopMatrix();
 		//2D精灵封装
 		imageSprite.Draw();
+
+		//绘制文字
+		glListBase(mTexts - 32);
+		glColor4ub(255, 0, 0, 255); //颜色设置一定要在glRasterPos2f之前
+		glRasterPos2f(100.0f, 100.0f);
+		glCallLists(strlen("Hello Font"), GL_BYTE, "Hello Font");
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}
