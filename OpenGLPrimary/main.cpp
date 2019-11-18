@@ -223,6 +223,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	HFONT hFont = CreateFontA(24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Arial");
 	SelectObject(dc, hFont);
 	wglUseFontBitmapsA(dc, 32, 96, mTexts);
+	/**系统时间*/
+	char szBuffer[256];
+	memset(szBuffer, 0, 256*sizeof(char));
+	strcpy(szBuffer, "Hello Font");
 
 
 	//地面
@@ -310,10 +314,12 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		imageSprite.Draw();
 
 		//绘制文字
+		memset(szBuffer, 0, 256 * sizeof(char));
+		_strtime(szBuffer); //系统时间
 		glListBase(mTexts - 32);
 		glColor4ub(255, 0, 0, 255); //颜色设置一定要在glRasterPos2f之前
 		glRasterPos2f(100.0f, 100.0f);
-		glCallLists(strlen("Hello Font"), GL_BYTE, "Hello Font");
+		glCallLists(strlen(szBuffer), GL_BYTE, szBuffer);
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}
