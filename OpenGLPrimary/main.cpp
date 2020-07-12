@@ -84,6 +84,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	glLoadIdentity();
 	
 	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //擦除背景色
+	glEnable(GL_CULL_FACE); //只绘制正面，提高效率，如果电连接为顺时针则无法显示
+
+	glFrontFace(GL_CW); //设置正方向为顺时针
 
 	//显示窗口
 	ShowWindow(hwnd, SW_SHOW);
@@ -106,13 +109,16 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		glLineWidth(5.0);
 
-		glBegin(GL_LINE_STRIP);
+		//默认方向：ccw，逆时针方向
+		glBegin(GL_TRIANGLES);
 		glColor4ub(255.0, 0.0, 0.0, 255.0); //颜色差值
 		glVertex3f(0.0, 0.0, -100);
+
 		glColor4ub(0.0, 255.0, 0.0, 255.0);
-		glVertex3f(10.0, 0.0, -100);
+		glVertex3f(20.0, 0.0, -100);
+
 		glColor4ub(0.0, 0.0, 255.0, 255.0);
-		glVertex3f(10.0, -10.0, -100);
+		glVertex3f(20.0, -20.0, -100);
 		glEnd();
 
 
