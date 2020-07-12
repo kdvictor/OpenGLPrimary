@@ -107,10 +107,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		glLineWidth(5.0);
 		glColor4ub(255.0, 0.0, 0.0, 255.0);
 
-		glBegin(GL_LINES);
+		glBegin(GL_LINE_LOOP);
 		glVertex3f(0.0, 0.0, -100);
-		glVertex3f(10.0, 0.0, -100);
-
 		glVertex3f(10.0, 0.0, -100);
 		glVertex3f(10.0, -10.0, -100);
 		glEnd();
