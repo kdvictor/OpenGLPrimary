@@ -88,6 +88,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//glFrontFace(GL_CW); //设置正方向为顺时针
 
+	//glPolygonMode(GL_BACK, GL_LINE); //线框模式，GL_POINT:点。默认：GL_FILL
+	glPolygonMode(GL_BACK, GL_POINT);
+	glPointSize(10.0f);
+	glEnable(GL_POINT_SMOOTH);
+
 	//显示窗口
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd); //窗口显示出来有可能是脏的，需要刷新一次窗口
@@ -110,7 +115,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		glLineWidth(5.0);
 
 		//默认方向：ccw，逆时针方向
-		glBegin(GL_QUADS);
+		//GL_POLYGON:必须是凸多边形
+		glBegin(GL_POLYGON); 
 		glColor4ub(255.0, 0.0, 0.0, 255.0); //颜色差值
 		glVertex3f(0.0, 0.0, -100);
 
@@ -122,6 +128,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		glColor4ub(0.0, 0.0, 255.0, 255.0);
 		glVertex3f(-20.0, -20.0, -100);
+
+		glColor4ub(0.0, 0.0, 255.0, 255.0);
+		glVertex3f(-20.0, -10.0, -100);
 		glEnd();
 
 
