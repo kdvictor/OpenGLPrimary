@@ -85,7 +85,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\include;F:\FBX\2020.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <PreBuildEvent>
@@ -96,7 +96,7 @@
       <Command>editbin /subsystem:console $(OutDir)$(ProjectName).exe</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalDependencies>libfbxsdk-md.lib;libfbxsdk.lib;zlib-md.lib;libxml2-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>F:\FBX\2020.0\lib\vs2017\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>NotSet</SubSystem>
     </Link>
@@ -130,62 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="camera.cpp" />
-    <ClCompile Include="command_render_base.cpp" />
-    <ClCompile Include="command_render_line.cpp" />
-    <ClCompile Include="command_render_line_loop.cpp" />
-    <ClCompile Include="command_render_line_strip.cpp" />
-    <ClCompile Include="command_render_objmodel.cpp" />
-    <ClCompile Include="command_render_pan_rotate_zoom_matrix_light.cpp" />
-    <ClCompile Include="command_render_point.cpp" />
-    <ClCompile Include="command_render_quads.cpp" />
-    <ClCompile Include="command_render_skybox.cpp" />
-    <ClCompile Include="command_render_texture.cpp" />
-    <ClCompile Include="command_render_tringlefan.cpp" />
-    <ClCompile Include="command_render_tringles.cpp" />
-    <ClCompile Include="command_render_tringlestrip.cpp" />
-    <ClCompile Include="displaylist.cpp" />
-    <ClCompile Include="fbxmodel.cpp" />
-    <ClCompile Include="ground.cpp" />
-    <ClCompile Include="image_sprite.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="objmodel.cpp" />
-    <ClCompile Include="skybox.cpp" />
-    <ClCompile Include="texture.cpp" />
-    <ClCompile Include="context_helper.cpp" />
-    <ClCompile Include="vector3f.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\include\command\command_render_base.h" />
-    <ClInclude Include="..\include\command\command_render_line.h" />
-    <ClInclude Include="..\include\command\command_render_line_loop.h" />
-    <ClInclude Include="..\include\command\command_render_line_strip.h" />
-    <ClInclude Include="..\include\command\command_render_objmodel.h" />
-    <ClInclude Include="..\include\command\command_render_pan_rotate_zoom_matrix_light.h" />
-    <ClInclude Include="..\include\command\command_render_point.h" />
-    <ClInclude Include="..\include\command\command_render_skybox.h" />
-    <ClInclude Include="..\include\command\command_render_texture.h" />
-    <ClInclude Include="..\include\command\command_render_tringlefan.h" />
-    <ClInclude Include="..\include\command\command_render_tringles.h" />
-    <ClInclude Include="..\include\common_macrosh.h" />
-    <ClInclude Include="..\include\context\camera.h" />
-    <ClInclude Include="..\include\context\displaylist.h" />
-    <ClInclude Include="..\include\context\fbxmodel.h" />
-    <ClInclude Include="..\include\context\ground.h" />
-    <ClInclude Include="..\include\context\image_sprite.h" />
-    <ClInclude Include="..\include\context\list.h" />
-    <ClInclude Include="..\include\context\objmodel.h" />
-    <ClInclude Include="..\include\context\skybox.h" />
-    <ClInclude Include="..\include\context\texture.h" />
-    <ClInclude Include="..\include\context\context_helper.h" />
-    <ClInclude Include="..\include\context\vector3f.h" />
-    <ClInclude Include="..\include\context\vertex.h" />
-    <ClInclude Include="common.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="soil.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="OpenGLPrimary.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

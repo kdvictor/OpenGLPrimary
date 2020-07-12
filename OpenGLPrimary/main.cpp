@@ -1,139 +1,45 @@
-#include <stdio.h>
-#include "common.h"
+ï»¿#include <windows.h>
 
-#pragma comment(lib, "opengl32.lib") //¿ÉÒÔÔÚ¹¤³ÌÀïÃæÉèÖÃ
-#pragma comment(lib, "glu32.lib")
-#pragma comment(lib, "winmm.lib") //timeGetTime
+#include<gl/GL.h>
+#include <gl/GLU.h> //æ•°å­¦å¥½å¯ä»¥ä¸å¿…ç”¨ä»–
 
-#include "command/command_render_point.h"
-#include "command/command_render_line.h"
-#include "command/command_render_line_loop.h"
-#include "command/command_render_line_strip.h"
-#include "command/command_render_tringles.h"
-#include "command/command_render_tringlestrip.h"
-#include "command/command_render_tringlefan.h"
-#include "command/command_render_quads.h"
-#include "command/command_render_pan_rotate_zoom_matrix_light.h"
-#include "command/command_render_texture.h"
-#include "command/command_render_objmodel.h"
-#include "command/command_render_skybox.h"
-#include "context/camera.h"
-#include "context/image_sprite.h"
-#include "context/ground.h"
-#include "context/fbxmodel.h"
-
-
-LH::Camera camera;
-POINT originalPos;
-bool isRotateView;
-/* ¼àÌıÓÃ»§²Ù×÷º¯Êı;LRESULT(º¯Êı·µ»ØÖµÀàĞÍ); CALLBACK(µ÷ÓÃ·½Ê½)
-   hwnd(´°¿Ú¾ä±ú£¬ÓÃÓÚ±ê¼ÇÓÃ»§²Ù×÷ÁËÄÄÒ»¸ö´°¿Ú); msg(ÏûÏ¢ID£¬±ÈÈç1±íÊ¾ÓÃ»§ÍÏ×§ÁË´°¿Ú);
-   wParam(ÏûÏ¢¸½´ø²ÎÊı£¬±ÈÈçÓÃ»§ÍÏ×§´°¿Ú£¬¾ßÌåÍÏµ½Ê²Ã´µØ·½È¥ÁË); lParam(ÏûÏ¢¸½´ø²ÎÊı)
+/* ç›‘å¬ç”¨æˆ·æ“ä½œå‡½æ•°;LRESULT(å‡½æ•°è¿”å›å€¼ç±»å‹); CALLBACK(è°ƒç”¨æ–¹å¼)
+   hwnd(çª—å£å¥æŸ„ï¼Œç”¨äºæ ‡è®°ç”¨æˆ·æ“ä½œäº†å“ªä¸€ä¸ªçª—å£); msg(æ¶ˆæ¯IDï¼Œæ¯”å¦‚1è¡¨ç¤ºç”¨æˆ·æ‹–æ‹½äº†çª—å£);
+   wParam(æ¶ˆæ¯é™„å¸¦å‚æ•°ï¼Œæ¯”å¦‚ç”¨æˆ·æ‹–æ‹½çª—å£ï¼Œå…·ä½“æ‹–åˆ°ä»€ä¹ˆåœ°æ–¹å»äº†); lParam(æ¶ˆæ¯é™„å¸¦å‚æ•°)
 */
 LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
-	case WM_MOUSEMOVE:
-		//if (isRotateView)
-		//{
-		//	POINT currentPos;
-		//	currentPos.x = LOWORD(lParam);
-		//	currentPos.y = HIWORD(lParam);
-		//	ClientToScreen(hwnd, &currentPos);
-		//	int deltaX = currentPos.x - originalPos.x;
-		//	int deltaY = currentPos.y - originalPos.y;
-		//	float angle = (float)deltaY / 100000;
-		//	if (deltaY > 0)
-		//	{
-		//		camera.Pitch(angle);
-		//	}
-		//	else if (deltaY <0)
-		//	{
-		//		camera.Pitch(-angle);
-		//	}
-		//}
-		break;
-	case WM_RBUTTONDOWN:
-		//originalPos.x = LOWORD(lParam);
-		//originalPos.y = HIWORD(lParam);
-		//ClientToScreen(hwnd, &originalPos); //×ª³ÉÆÁÄ»×ø±ê
-		//SetCapture(hwnd);
-		//ShowCursor(false);
-		//isRotateView = true;
-		break;
-	case WM_RBUTTONUP:
-		//SetCursorPos(originalPos.x, originalPos.y);
-		//ReleaseCapture();
-		//ShowCursor(true);
-		//isRotateView = false;
-		break;
-	case WM_KEYDOWN:
-		switch (wParam)
-		{
-		case 'A':
-			camera.mIsMoveLeft = true;
-			break;
-		case 'D':
-			camera.mIsMoveRight = true;
-			break;
-		case 'W':
-			camera.mIsMoveForward = true;
-			break;
-		case 'S':
-			camera.mIsMoveBackward = true;
-			break;
-		default:
-			break;
-		}
-		break;
-	case WM_KEYUP:
-		switch (wParam)
-		{
-		case 'A':
-			camera.mIsMoveLeft = false;
-			break;
-		case 'D':
-			camera.mIsMoveRight = false;
-			break;
-		case 'W':
-			camera.mIsMoveForward = false;
-			break;
-		case 'S':
-			camera.mIsMoveBackward = false;
-			break;
-		default:
-			break;
-		}
-		break;
-	case WM_CLOSE: //Ä¿Ç°Ö»¹ØĞÄÍË³ö´°¿ÚµÄÏûÏ¢
+	case WM_CLOSE: //ç›®å‰åªå…³å¿ƒé€€å‡ºçª—å£çš„æ¶ˆæ¯
 		PostQuitMessage(0);
 		return 0;
 	}
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-/* INT£¨º¯Êı·µ»ØÖµÀàĞÍ£©; WINAPI£¨º¯ÊıĞŞÊÎ·û,Ç¿µ÷µ÷ÓÃ·½Ê½£©;
-   ²Ù×÷ÏµÍ³Æô¶«Ê±´«ÈëµÄ²ÎÊı£ºhInstance£¨µ±Ç°Ó¦ÓÃ³ÌĞòµÄÊµÀı),hPrevInstance£¨ÉÏÒ»´Î¸ÃÓ¦ÓÃ³ÌĞòÆô¶¯µÄÊµÀı£©£¬
-   lpCmdLine£¨ÃüÁîĞĞÆô¶«³ÌĞò´«ÈëµÄ²ÎÊı£©,nShowCmd£¨´°¿ÚÏÔÊ¾Ïà¹Ø²ÎÊı£©*/ 
+/* INTï¼ˆå‡½æ•°è¿”å›å€¼ç±»å‹ï¼‰; WINAPIï¼ˆå‡½æ•°ä¿®é¥°ç¬¦,å¼ºè°ƒè°ƒç”¨æ–¹å¼ï¼‰;
+   æ“ä½œç³»ç»Ÿå¯ä¸œæ—¶ä¼ å…¥çš„å‚æ•°ï¼šhInstanceï¼ˆå½“å‰åº”ç”¨ç¨‹åºçš„å®ä¾‹),hPrevInstanceï¼ˆä¸Šä¸€æ¬¡è¯¥åº”ç”¨ç¨‹åºå¯åŠ¨çš„å®ä¾‹ï¼‰ï¼Œ
+   lpCmdLineï¼ˆå‘½ä»¤è¡Œå¯ä¸œç¨‹åºä¼ å…¥çš„å‚æ•°ï¼‰,nShowCmdï¼ˆçª—å£æ˜¾ç¤ºç›¸å…³å‚æ•°ï¼‰*/
+
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-	//´´½¨´°¿Ú°üº¬ËÄ²½£º×¢²á£¬´´½¨£¬ÏÔÊ¾£¬¼àÌıÓÃ»§²Ù×÷
+	//åˆ›å»ºçª—å£åŒ…å«å››æ­¥ï¼šæ³¨å†Œï¼Œåˆ›å»ºï¼Œæ˜¾ç¤ºï¼Œç›‘å¬ç”¨æˆ·æ“ä½œ
 
-	//×¢²á´°¿Ú
-	WNDCLASSEX windClass; //ÓÃ´Ë½á¹¹Ìå¸æËß²Ù×÷ÏµÍ³ÎÒÃÇĞèÒªÒ»¸öÊ²Ã´ÑùµÄ´°¿Ú
-	windClass.cbClsExtra = NULL; //´°¿ÚÀàĞÍµÄ¶îÍâ¿Õ¼ä£¨ÔÚ´ËÎÒÃÇ²»ĞèÒª¶îÍâµÄ¿Õ¼ä£©
-	windClass.cbSize = sizeof(WNDCLASSEX); //windClassÕâ¸ö¶ÔÏóÊµ¼ÊÕ¼ÓÃµÄÄÚ´æ
-	windClass.cbWndExtra = 0; //´°¿ÚµÄ¶îÍâÄÚ´æ
-	windClass.hbrBackground = NULL; //Ê¹ÓÃOpenGL²Á³ı±³¾°É«£¬¶ø²»ÊÇÒªÓÃGDIËùÒÔÎªNULL
-	windClass.hCursor = LoadCursor(NULL, IDC_ARROW); //ÉèÖÃ¹â±ê£¨ÔÚ´ËÉèÖÃÎª¼ıÍ·¹â±ê£©
-	windClass.hIcon = NULL; //Ó¦ÓÃ³ÌĞòÔÚÎÄ¼ş¼ĞÖĞÏÔÊ¾µÄÍ¼±ê£¨ÔÚ´Ë²»ÉèÖÃ£©
-	windClass.hIconSm = NULL; //Ó¦ÓÃ³ÌĞòÆô¶¯ºóÔÚ×óÉÏ½ÇÏÔÊ¾µÄÍ¼±ê
-	windClass.hInstance = hInstance; //²Ù×÷ÏµÍ³´«ÈëµÄ²ÎÊı
-	windClass.lpfnWndProc = GLWindowProc; //´Ëº¯Êı¼àÌıÓÃ»§²Ù×÷£¬¸æËßÎÒÃÇË­²Ù×÷ÁËÎÒÃÇµÄ´°¿Ú
-	windClass.lpszClassName = L"GLWindow"; //´°¿ÚÃû³Æ
-	windClass.lpszMenuName = NULL; //²Ëµ¥µÄÃû×Ö£¨Ã»ÓĞ²Ëµ¥£¬¸³¿Õ£©
-	windClass.style = CS_VREDRAW | CS_HREDRAW; //´°¿ÚË¢ĞÂÊ±²ÉÓÃµÄÖØ»æ·½Ê½£¨ÔÚ´Ë²ÉÓÃË®Æ½»òÕß´¹Ö±ÖØ»æµÄ·½Ê½£©
+	//æ³¨å†Œçª—å£
+	WNDCLASSEX windClass; //ç”¨æ­¤ç»“æ„ä½“å‘Šè¯‰æ“ä½œç³»ç»Ÿæˆ‘ä»¬éœ€è¦ä¸€ä¸ªä»€ä¹ˆæ ·çš„çª—å£
+	windClass.cbClsExtra = NULL; //çª—å£ç±»å‹çš„é¢å¤–ç©ºé—´ï¼ˆåœ¨æ­¤æˆ‘ä»¬ä¸éœ€è¦é¢å¤–çš„ç©ºé—´ï¼‰
+	windClass.cbSize = sizeof(WNDCLASSEX); //windClassè¿™ä¸ªå¯¹è±¡å®é™…å ç”¨çš„å†…å­˜
+	windClass.cbWndExtra = 0; //çª—å£çš„é¢å¤–å†…å­˜
+	windClass.hbrBackground = NULL; //ä½¿ç”¨OpenGLæ“¦é™¤èƒŒæ™¯è‰²ï¼Œè€Œä¸æ˜¯è¦ç”¨GDIæ‰€ä»¥ä¸ºNULL
+	windClass.hCursor = LoadCursor(NULL, IDC_ARROW); //è®¾ç½®å…‰æ ‡ï¼ˆåœ¨æ­¤è®¾ç½®ä¸ºç®­å¤´å…‰æ ‡ï¼‰
+	windClass.hIcon = NULL; //åº”ç”¨ç¨‹åºåœ¨æ–‡ä»¶å¤¹ä¸­æ˜¾ç¤ºçš„å›¾æ ‡ï¼ˆåœ¨æ­¤ä¸è®¾ç½®ï¼‰
+	windClass.hIconSm = NULL; //åº”ç”¨ç¨‹åºå¯åŠ¨ååœ¨å·¦ä¸Šè§’æ˜¾ç¤ºçš„å›¾æ ‡
+	windClass.hInstance = hInstance; //æ“ä½œç³»ç»Ÿä¼ å…¥çš„å‚æ•°
+	windClass.lpfnWndProc = GLWindowProc; //æ­¤å‡½æ•°ç›‘å¬ç”¨æˆ·æ“ä½œï¼Œå‘Šè¯‰æˆ‘ä»¬è°æ“ä½œäº†æˆ‘ä»¬çš„çª—å£
+	windClass.lpszClassName = L"GLWindow"; //çª—å£åç§°
+	windClass.lpszMenuName = NULL; //èœå•çš„åå­—ï¼ˆæ²¡æœ‰èœå•ï¼Œèµ‹ç©ºï¼‰
+	windClass.style = CS_VREDRAW | CS_HREDRAW; //çª—å£åˆ·æ–°æ—¶é‡‡ç”¨çš„é‡ç»˜æ–¹å¼ï¼ˆåœ¨æ­¤é‡‡ç”¨æ°´å¹³æˆ–è€…å‚ç›´é‡ç»˜çš„æ–¹å¼ï¼‰
 	ATOM atom = RegisterClassEx(&windClass);
 	if (!atom)
 	{
@@ -141,105 +47,48 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return 0;
 	}
 
-	//ÊÓ¿Ú´óĞ¡
+	//è§†å£å¤§å°
 	RECT rect;
 	rect.left = 0;
 	rect.right = 800;
 	rect.top = 0;
 	rect.bottom = 600;
-	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, NULL); // ´°¿Ú·ç¸ñºÍ²Ëµ¥¾ä±ú
+	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, NULL); // çª—å£é£æ ¼å’Œèœå•å¥æŸ„
 	int windowWidth = rect.right - rect.left;
 	int windowHeight = rect.bottom - rect.top;
 
-	//´´½¨´°¿Ú
-	//²ÎÊıÒÀ´Î¶ÔÓ¦Îª£º´°¿Ú´´½¨µÄ·ç¸ñ£¬´°¿ÚÃû³Æ£¨×¢²áÊ±µÄÃû³Æ£©, ´°¿ÚÓÒÉÏ½Ç±êÌâÀ¸£¬´°¿ÚµÄ·ç¸ñ£¬´°Á±ÆğÊ¼Î»ÖÃ£¬´°¿ÚµÄ¿íºÍ¸ß, ¸½´°¿ÚµÄ¾ä±ú£¬²Ëµ¥¾ä±ú£¬ ´°¿ÚÊµÀı
+	//åˆ›å»ºçª—å£
+	//å‚æ•°ä¾æ¬¡å¯¹åº”ä¸ºï¼šçª—å£åˆ›å»ºçš„é£æ ¼ï¼Œçª—å£åç§°ï¼ˆæ³¨å†Œæ—¶çš„åç§°ï¼‰, çª—å£å³ä¸Šè§’æ ‡é¢˜æ ï¼Œçª—å£çš„é£æ ¼ï¼Œçª—å¸˜èµ·å§‹ä½ç½®ï¼Œçª—å£çš„å®½å’Œé«˜, é™„çª—å£çš„å¥æŸ„ï¼Œèœå•å¥æŸ„ï¼Œ çª—å£å®ä¾‹
 	HWND hwnd = CreateWindowEx(NULL, L"GLWindow", L"Opengl Window", WS_OVERLAPPEDWINDOW, 100, 100, windowWidth, windowHeight, NULL, NULL, hInstance, NULL);
 
-	//´´½¨opengläÖÈ¾»·¾³
+	//åˆ›å»ºopenglæ¸²æŸ“ç¯å¢ƒ
 	HDC dc = GetDC(hwnd);
-	PIXELFORMATDESCRIPTOR pfd;
+	PIXELFORMATDESCRIPTOR pfd; //åƒç´ æ ¼å¼æè¿°ç¬¦
 	memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
 	pfd.nVersion = 1;
 	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
-	pfd.cColorBits = 32; //Ò»¸öÏñËØÕ¼ÓÃ32bit£¬RGBA·Ö±ğÕ¼ÓÃ8bit
-	pfd.cDepthBits = 24; //Éî¶È»º³åÇøÃ¿¸öÏñËØÕ¼24it£¬¸¡µãÊı
-	pfd.cStencilBits = 8; //ÃÉ°å»º³åÇøÃ¿¸öÏñËØÕ¼8bit
-	pfd.iPixelType = PFD_TYPE_RGBA; //ÉèÖÃÏñËØÀàĞÍ
-	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER; //ÉèÖÃÒ»ÏÂÆäËûµÄflag
-	int pixelFormat = ChoosePixelFormat(dc, &pfd);
+	pfd.cColorBits = 32; //ä¸€ä¸ªåƒç´ å ç”¨32bitï¼ŒRGBAåˆ†åˆ«å ç”¨8bit
+	pfd.cDepthBits = 24; //æ·±åº¦ç¼“å†²åŒºæ¯ä¸ªåƒç´ å 24itï¼Œæµ®ç‚¹æ•°
+	pfd.cStencilBits = 8; //è’™æ¿ç¼“å†²åŒºæ¯ä¸ªåƒç´ å 8bit
+	pfd.iPixelType = PFD_TYPE_RGBA; //è®¾ç½®åƒç´ ç±»å‹
+	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER; //è®¾ç½®ä¸€ä¸‹å…¶ä»–çš„flag
+	int pixelFormat = ChoosePixelFormat(dc, &pfd); //è®©ç³»ç»Ÿé€‰æ ¼å¼
 	SetPixelFormat(dc, pixelFormat, &pfd);
-	HGLRC rc = wglCreateContext(dc); //äÖÈ¾»·¾³
-	wglMakeCurrent(dc, rc); //Ê¹äÖÈ¾»·¾³ÉúĞ§
+	HGLRC rc = wglCreateContext(dc); //æ¸²æŸ“ç¯å¢ƒ
+	wglMakeCurrent(dc, rc); //ä½¿æ¸²æŸ“ç¯å¢ƒç”Ÿæ•ˆ
 
-	//³õÊ¼»¯
-	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //²Á³ı±³¾°É«
-
-	//command
-	LH::RenderObjModelCommand* objModelCommand = new LH::RenderObjModelCommand();
-	objModelCommand->Init();
-
-	LH::RenderSkyBoxCommand* skyBoxCommand = new LH::RenderSkyBoxCommand();
-	skyBoxCommand->Init_i();
-
-	//ÉãÏñ»ú
-	camera.mViewPortWidth = windowWidth;
-	camera.mViewPortHeight = windowHeight;
+	//åˆå§‹åŒ–
+	//glMatrixMode(GL_PROJECTION);
 	
 
-	//ÏÔÊ¾´°¿Ú
+	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //æ“¦é™¤èƒŒæ™¯è‰²
+
+	//æ˜¾ç¤ºçª—å£
 	ShowWindow(hwnd, SW_SHOW);
-	UpdateWindow(hwnd); //´°¿ÚÏÔÊ¾³öÀ´ÓĞ¿ÉÄÜÊÇÔàµÄ£¬ĞèÒªË¢ĞÂÒ»´Î´°¿Ú
+	UpdateWindow(hwnd); //çª—å£æ˜¾ç¤ºå‡ºæ¥æœ‰å¯èƒ½æ˜¯è„çš„ï¼Œéœ€è¦åˆ·æ–°ä¸€æ¬¡çª—å£
 
-	//Ê¹ÓÃ¶¥µãÊı×é½øĞĞÓÅ»¯
-	//float verters[] = { //¼ÙÉèÕâĞ©¶¥µãÊı¾İÊÇ´ÓÄ£ĞÍÀïÃæ¶Á³öÀ´µÄ
-	//	-1 * (windowWidth / 2.0), -1 * (windowHeight / 2.0), 0.0f,
-	//	0.0f, -1 * (windowHeight / 2.0), 0.0f,
-	//	0.0f, 0.0f, 0.0f,
-	//	-1 * (windowWidth / 2.0), 0.0f, 0.0f
-	//};
-
-	//float texcoords[] = {
-	//	0.0f, 0.0f,
-	//	1.0f, 0.0f,
-	//	1.0f, 1.0f,
-	//	0.0f, 1.0f
-	//};
-
-	//2d¾«Áé
-	//LH::ImageSprite imageSprite;
-	//LH::Texture* textture = LH::Texture::LoadTextures("res/head.png");
-	//imageSprite.SetTexture(textture);
-	//imageSprite.SetRect(-200.0f, -200.0f, 100, 100);
-	//×Ô¼ºÉú³Étexture:Éú³ÉÁ£×Ó
-	LH::ImageSprite imageSprite;
-	LH::Texture* textture = new LH::Texture();
-	textture->CreateTexture(256);
-	imageSprite.SetTexture(textture);
-	imageSprite.SetRect(-200.0f, -200.0f, 20.f, 20.f);
-
-	//»æÖÆÎÄ×Ö
-	GLuint mTexts;
-	mTexts = glGenLists(96);
-	HFONT hFont = CreateFontA(24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Arial");
-	SelectObject(dc, hFont);
-	wglUseFontBitmapsA(dc, 32, 96, mTexts);
-	/**ÏµÍ³Ê±¼ä*/
-	char szBuffer[256];
-	memset(szBuffer, 0, 256*sizeof(char));
-	strcpy(szBuffer, "Hello Font");
-
-
-	//µØÃæ
-	LH::Ground ground;
-	ground.Init();
-
-	//FBX
-	LH::FBXModel fbxModel;
-	fbxModel.Init("res/tauren.fbx");
-
-	//ÓÃÑ­»·À´±£³Ö´°¿ÚÏÔÊ¾
+	//ç”¨å¾ªç¯æ¥ä¿æŒçª—å£æ˜¾ç¤º
 	MSG msg;
-	static float sTimeSinceStartUp = timeGetTime() / 1000.0f;
 	while (true)
 	{
 		if (PeekMessage(&msg, NULL, NULL, NULL, PM_REMOVE))
@@ -251,77 +100,17 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		float currentTime = timeGetTime() / 1000.0f;
-		float timeElapse = currentTime - sTimeSinceStartUp;
-		sTimeSinceStartUp = currentTime;
+		glClear(GL_COLOR_BUFFER_BIT); //æ“¦é™¤é¢œè‰²ç¼“å†²åŒº
 
-		//¼ôµ¶
-		//glEnable(GL_SCISSOR_TEST);
-		//glScissor(0, 0, windowWidth / 2, windowHeight);
+		glPointSize(10.0f);
+		glBegin(GL_POINTS);
+		glColor4ub(255.0, 0.0, 0.0, 255.0);
+		glVertex3f(0.0, 0.0, 1.0);
+		glEnd();
 
-		camera.SwitchTo3D();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //²Á³ıÑÕÉ«»º³åÇø£¬glClear(GL_DEPTH_BUFFER_BIT)£ºÉî¶ÈÖµÈ«²¿±ä³É1.0£¬·¶Î§0~1
 
-		//set up camera
-		camera.Update(timeElapse);
-
-		skyBoxCommand->SetCameraPosition(camera.mEye.x, camera.mEye.y, camera.mEye.z);
-		skyBoxCommand->Render();
-
-		//µØÃæ
-		ground.Draw();
-
-		//¾µÏñ
-		glDisable(GL_DEPTH_TEST);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_COLOR, GL_ONE);
-		glPushMatrix();
-		glTranslatef(0.0f, -2.0f, 0.0f);
-		glRotatef(180.0f, 1.0f, 0.0f, 0.0f);
-		objModelCommand->Render();
-		glPopMatrix();
-		glEnable(GL_DEPTH_TEST);
-		glDisable(GL_BLEND);
-		//µØÇò
-		objModelCommand->Render();
-
-		//Fbx
-		fbxModel.Draw();
-
-		//glViewport(0, windowHeight / 2, windowWidth / 2, windowHeight / 2);//¹æ¶¨»­»­µÄÇøÓò,¶àÊÓ¿Ú
-		//»­2DÍ¼Ïñ£¬Ö®Ç°ĞèÒªÇĞ»»³É2DµÄÉãÏñ»ú
-		camera.SwitchTo2D();
-		////////////////////
-		//glBegin(GL_QUADS);
-		//glTexCoord2f(0.0, 0.0);
-		//glVertex3f(-1*(windowWidth/2.0), -1*(windowHeight/2.0), 0.0f);
-		//glTexCoord2f(1.0, 0.0);
-		//glVertex3f(0.0f, -1*(windowHeight / 2.0), 0.0f);
-		//glTexCoord2f(1.0, 1.0);
-		//glVertex3f(0.0f, 0.0f, 0.0f);
-		//glTexCoord2f(0.0, 1.0);
-		//glVertex3f(-1*(windowWidth / 2.0), 0.0f, 0.0f);
-		//glEnd();
-		//¶¥µãÊı×éÓÅ»¯
-		//glPushMatrix();
-		//glEnableClientState(GL_VERTEX_ARRAY); //Æô¶¯¶¥µãÊı×é
-		//glVertexPointer(3/*Ò»¸öµã¶àÉÙ¸öÊı¾İ*/, GL_FLOAT/*Ã¿¸öÊı¾İµÄÀàĞÍ*/, 0/*ÓĞÃ»ÓĞ¼ä¸ô*/, verters/*Ô´Êı¾İ*/);
-		//glEnableClientState(GL_TEXTURE_COORD_ARRAY); //Æô¶¯ÎÆÀíÊı×é
-		//glTexCoordPointer(2/*Ò»¸öµã¶àÉÙ¸öÊı¾İ*/, GL_FLOAT/*Ã¿¸öÊı¾İµÄÀàĞÍ*/, 0/*ÓĞÃ»ÓĞ¼ä¸ô*/, texcoords/*Ô´Êı¾İ*/);
-		//glDrawArrays(GL_QUADS, 0/*´Ó0ºÅµã¿ªÊ¼»­*/, 4/*»­ËÄ¸öµã*/);
-		//glPopMatrix();
-		//2D¾«Áé·â×°
-		imageSprite.Draw();
-
-		//»æÖÆÎÄ×Ö
-		memset(szBuffer, 0, 256 * sizeof(char));
-		_strtime(szBuffer); //ÏµÍ³Ê±¼ä
-		glListBase(mTexts - 32);
-		glColor4ub(255, 0, 0, 255); //ÑÕÉ«ÉèÖÃÒ»¶¨ÒªÔÚglRasterPos2fÖ®Ç°
-		glRasterPos2f(100.0f, 100.0f);
-		glCallLists(strlen(szBuffer), GL_BYTE, szBuffer);
-
-		SwapBuffers(dc); //½»»»Ç°ºó»º³åÇøÊ¹µÃÓÃ»§¿ÉÒÔ¿´¼û
+		SwapBuffers(dc); //äº¤æ¢å‰åç¼“å†²åŒºä½¿å¾—ç”¨æˆ·å¯ä»¥çœ‹è§
 	}
+
 	return 0;
 }
