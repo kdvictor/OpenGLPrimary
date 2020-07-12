@@ -105,11 +105,13 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		glClear(GL_COLOR_BUFFER_BIT); //擦除颜色缓冲区
 
 		glLineWidth(5.0);
-		glColor4ub(255.0, 0.0, 0.0, 255.0);
 
-		glBegin(GL_LINE_LOOP);
+		glBegin(GL_LINE_STRIP);
+		glColor4ub(255.0, 0.0, 0.0, 255.0); //颜色差值
 		glVertex3f(0.0, 0.0, -100);
+		glColor4ub(0.0, 255.0, 0.0, 255.0);
 		glVertex3f(10.0, 0.0, -100);
+		glColor4ub(0.0, 0.0, 255.0, 255.0);
 		glVertex3f(10.0, -10.0, -100);
 		glEnd();
 
