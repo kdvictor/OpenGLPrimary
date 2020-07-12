@@ -84,7 +84,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	glLoadIdentity();
 	
 	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //擦除背景色
-	//glEnable(GL_CULL_FACE); //只绘制正面，提高效率，如果电连接为顺时针则无法显示
+	glEnable(GL_CULL_FACE); //只绘制正面，提高效率，如果电连接为顺时针则无法显示
 
 	//glFrontFace(GL_CW); //设置正方向为顺时针
 
@@ -96,6 +96,26 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//显示窗口
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd); //窗口显示出来有可能是脏的，需要刷新一次窗口
+
+	float blackColor[] = { 0.0f,0.0f,0.0f,1.0f };
+	float whiteColor[] = { 1.0f,1.0f,1.0f,1.0f };
+	float lightPosition[] = { 0.0f,1.0f,0.0f,0.0f };
+	glLightfv(GL_LIGHT0, GL_AMBIENT, whiteColor);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteColor);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, whiteColor);
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition); //direction,point,spot
+
+	float blackMatri[] = { 0.0f,0.0f,0.0f,1.0f };
+	float ambintMatri[] = { 0.1f,0.1f,0.1f,1.0f };
+	float diffuseMatri[] = { 0.4f,0.4f,0.4f,1.0f };
+	float specularMatri[] = { 0.9f,0.9f,0.9f,1.0f };
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ambintMatri);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMatri);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specularMatri);
+
+	glEnable(GL_LIGHTING); //开启光照
+	glEnable(GL_LIGHT0);
+
 
 	//用循环来保持窗口显示
 	MSG msg;
@@ -110,28 +130,32 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		glLoadIdentity();//进来之后先给MV矩阵设为单位矩阵
+		//glLoadIdentity();//进来之后先给MV矩阵设为单位矩阵
+		glPushMatrix();
 		glClear(GL_COLOR_BUFFER_BIT); //擦除颜色缓冲区
 
-		glScalef(1.0f, 1.0f, 0.5f); //缩放的是坐标
-		glRotatef(30.0f, 0.0f, 0.0f, -1.0f);
-		glTranslatef(2.0f, 0.0f, 0.0f);
+		//glScalef(1.0f, 1.0f, 0.5f); //缩放的是坐标
+		//glRotatef(30.0f, 0.0f, 0.0f, -1.0f);
+		//glTranslatef(2.0f, 0.0f, 0.0f);
 
 		//默认方向：ccw，逆时针方向
 		//GL_POLYGON:必须是凸多边形
 		glBegin(GL_POLYGON); 
 		glColor4ub(255.0, 0.0, 0.0, 255.0); //颜色差值
-		glVertex3f(0.0, 1.0, -10);
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(-1.0, -0.5, -2);
 
 		glColor4ub(0.0, 255.0, 0.0, 255.0);
-		glVertex3f(-1.0, 0.0, -10);
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(1.0, -0.5, -2);
 
 		glColor4ub(0.0, 0.0, 255.0, 255.0);
-		glVertex3f(1.0, 0.0, -10);
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(0.0, -0.5, -10);
 
 		glEnd();
 
-
+		glPopMatrix();
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}
