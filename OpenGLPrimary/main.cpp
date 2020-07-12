@@ -89,9 +89,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//glFrontFace(GL_CW); //设置正方向为顺时针
 
 	//glPolygonMode(GL_BACK, GL_LINE); //线框模式，GL_POINT:点。默认：GL_FILL
-	glPolygonMode(GL_BACK, GL_POINT);
-	glPointSize(10.0f);
-	glEnable(GL_POINT_SMOOTH);
+	//glPolygonMode(GL_BACK, GL_POINT);
+	//glPointSize(10.0f);
+	//glEnable(GL_POINT_SMOOTH);
 
 	//显示窗口
 	ShowWindow(hwnd, SW_SHOW);
@@ -110,27 +110,25 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+		glLoadIdentity();//进来之后先给MV矩阵设为单位矩阵
 		glClear(GL_COLOR_BUFFER_BIT); //擦除颜色缓冲区
 
-		glLineWidth(5.0);
+		glScalef(1.0f, 1.0f, 0.5f); //缩放的是坐标
+		glRotatef(30.0f, 0.0f, 0.0f, -1.0f);
+		glTranslatef(2.0f, 0.0f, 0.0f);
 
 		//默认方向：ccw，逆时针方向
 		//GL_POLYGON:必须是凸多边形
 		glBegin(GL_POLYGON); 
 		glColor4ub(255.0, 0.0, 0.0, 255.0); //颜色差值
-		glVertex3f(0.0, 0.0, -100);
+		glVertex3f(0.0, 1.0, -10);
 
 		glColor4ub(0.0, 255.0, 0.0, 255.0);
-		glVertex3f(20.0, 0.0, -100);
+		glVertex3f(-1.0, 0.0, -10);
 
 		glColor4ub(0.0, 0.0, 255.0, 255.0);
-		glVertex3f(20.0, -20.0, -100);
+		glVertex3f(1.0, 0.0, -10);
 
-		glColor4ub(0.0, 0.0, 255.0, 255.0);
-		glVertex3f(-20.0, -20.0, -100);
-
-		glColor4ub(0.0, 0.0, 255.0, 255.0);
-		glVertex3f(-20.0, -10.0, -100);
 		glEnd();
 
 
