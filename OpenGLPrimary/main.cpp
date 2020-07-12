@@ -78,9 +78,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	wglMakeCurrent(dc, rc); //使渲染环境生效
 
 	//初始化
-	//glMatrixMode(GL_PROJECTION);
+	glMatrixMode(GL_PROJECTION);
+	gluPerspective(50.0, 800.0 / 600.0, 0.1f, 1000.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 	
-
 	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //擦除背景色
 
 	//显示窗口
@@ -103,10 +105,15 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		glClear(GL_COLOR_BUFFER_BIT); //擦除颜色缓冲区
 
 		glPointSize(10.0f);
-		glBegin(GL_POINTS);
 		glColor4ub(255.0, 0.0, 0.0, 255.0);
-		glVertex3f(0.0, 0.0, 1.0);
+
+		glBegin(GL_POINTS);
+		glVertex3f(0.0, 0.0, -100);
+		glColor4ub(55.0, 20.0, 60.0, 255.0);
+		glVertex3f(10.0, 0.0, -100);
+		glVertex3f(-10.0, 0.0, -100);
 		glEnd();
+
 
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见

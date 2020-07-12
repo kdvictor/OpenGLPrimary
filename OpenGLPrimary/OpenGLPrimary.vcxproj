@@ -96,7 +96,7 @@
       <Command>editbin /subsystem:console $(OutDir)$(ProjectName).exe</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>F:\FBX\2020.0\lib\vs2017\x64\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>NotSet</SubSystem>
     </Link>
