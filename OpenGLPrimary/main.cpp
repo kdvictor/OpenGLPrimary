@@ -1,7 +1,8 @@
 ﻿#include <windows.h>
-
 #include<gl/GL.h>
 #include <gl/GLU.h> //数学好可以不必用他
+
+#include "texture.h"
 
 /* 监听用户操作函数;LRESULT(函数返回值类型); CALLBACK(调用方式)
    hwnd(窗口句柄，用于标记用户操作了哪一个窗口); msg(消息ID，比如1表示用户拖拽了窗口);
@@ -116,6 +117,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	glEnable(GL_LIGHTING); //开启光照
 	glEnable(GL_LIGHT0);
 
+	Texture texture;
+	texture.Init("./res/test.bmp");
 
 	//用循环来保持窗口显示
 	MSG msg;
