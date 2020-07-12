@@ -23,6 +23,35 @@ unsigned char * LoadFileContent(const char * const & pFilePath)
 
 	fclose(pFile);
 
-	printf("%s\n", pFileContent);
+	//printf("%s\n", pFileContent);
 	return pFileContent;
+}
+
+unsigned char * DecodeBMP(unsigned char * const & pFileContent, int & width, int & height)
+{
+	unsigned char* pPixelData = nullptr;
+	if (pFileContent == nullptr)
+	{
+		return pPixelData;
+	}
+
+	int pixelDataOffeset = *((int*)(pFileContent + 10));
+	width = *((int*)(pFileContent + 18));
+	height = *((int*)(pFileContent + 22));
+	pPixelData = (unsigned char*)(pFileContent + pixelDataOffeset);
+	if (pPixelData == nullptr)
+	{
+		//ÈÕÖ¾
+		return pPixelData;
+	}
+
+	//bgr -> rgb
+	for (int i = 0; i < width*height*3; i += 3)
+	{
+		pPixelData[i] = pPixelData[i] ^ pPixelData[i + 2];
+		pPixelData[i+2] = pPixelData[i] ^ pPixelData[i + 2];
+		pPixelData[i] = pPixelData[i] ^ pPixelData[i + 2];
+	}
+
+	return pPixelData;
 }
