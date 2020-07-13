@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <string>
 #include <sstream>
+#include <vector>
 #include "objmodel.h"
 #include "utlis.h"
+
+typedef struct FloatData
+{
+	float v[3];
+}FloatData;
 
 void ObjModel::Init(const char * const & pFilePath)
 {
@@ -13,7 +19,10 @@ void ObjModel::Init(const char * const & pFilePath)
 	}
 
 	std::stringstream ssFileContent((char*)pFileContent);
+	std::string temp;
 	char szOneLine[256];
+	std::vector<FloatData> positions, normals, texcoords;
+
 	while(!ssFileContent.eof())
 	{
 		memset(szOneLine, 0, 256 * sizeof(char));
@@ -23,21 +32,39 @@ void ObjModel::Init(const char * const & pFilePath)
 		{
 			if (szOneLine[0] == 'v')
 			{
+				std::stringstream ssOneLine(szOneLine);
+				FloatData data;
+				memset(&data, 0, sizeof(FloatData));
 				if (szOneLine[1] == 't')
 				{
-					printf("vt>%s\n", szOneLine);
+					ssOneLine >> temp;
+					ssOneLine >> data.v[0];
+					ssOneLine >> data.v[1];
+					texcoords.push_back(data);
+					printf("texcoord:%f,%f\n", data.v[0], data.v[1]);
 				}
 				else if(szOneLine[1] == 'n')
 				{
-					printf("vn>%s\n", szOneLine);
+					ssOneLine >> temp;
+					ssOneLine >> data.v[0];
+					ssOneLine >> data.v[1];
+					ssOneLine >> data.v[2];
+					normals.push_back(data);
+					printf("normal:%f,%f,%f\n", data.v[0], data.v[1],data.v[2]);
 				}
 				else
 				{
-					printf("v>%s\n", szOneLine);
+					ssOneLine >> temp;
+					ssOneLine >> data.v[0];
+					ssOneLine >> data.v[1];
+					ssOneLine >> data.v[2];
+					positions.push_back(data);
+					printf("position:%f,%f,%f\n", data.v[0], data.v[1], data.v[2]);
 				}
 			}
 			else if (szOneLine[0] == 'f')
 			{
+				std::stringstream ssOneLine(szOneLine);
 				printf("f>%s\n", szOneLine);
 			}
 		}

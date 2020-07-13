@@ -139,6 +139,7 @@
     <ClInclude Include="objmodel.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="utlis.h" />
+    <ClInclude Include="vertexdata.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
