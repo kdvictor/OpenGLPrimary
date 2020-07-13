@@ -146,7 +146,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		//默认方向：ccw，逆时针方向
 		//GL_POLYGON:必须是凸多边形
-		glBegin(GL_POLYGON); 
+		glBegin(GL_TRIANGLES); 
 		//glColor4ub(255.0, 0.0, 0.0, 255.0); //颜色差值
 		glNormal3f(0.0f, 1.0f, 0.0f);
 		glTexCoord2d(0.0, 0.0);
@@ -154,13 +154,27 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		//glColor4ub(0.0, 255.0, 0.0, 255.0);
 		glNormal3f(0.0f, 1.0f, 0.0f);
-		glTexCoord2d(1.0, 0.0);
+		glTexCoord2d(2.0, 0.0);
 		glVertex3f(1.0, -0.5, -2);
 
 		//glColor4ub(0.0, 0.0, 255.0, 255.0);
 		glNormal3f(0.0f, 1.0f, 0.0f);
-		glTexCoord2d(0.5, 1.0);
-		glVertex3f(0.0, -0.5, -10);
+		glTexCoord2d(0.0, 2.0);
+		glVertex3f(-1.0, -0.5, -3);
+
+
+
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glTexCoord2d(0.0, 2.0);
+		glVertex3f(-1.0, -0.5, -3);
+
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glTexCoord2d(2.0, 0.0);
+		glVertex3f(1.0, -0.5, -2);
+
+		glNormal3f(0.0f, 1.0f, 0.0f);
+		glTexCoord2d(2.0, 2.0);
+		glVertex3f(1.0, -0.5, -3);
 
 		glEnd();
 
