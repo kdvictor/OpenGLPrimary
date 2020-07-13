@@ -24,12 +24,18 @@
     <ClCompile Include="utlis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="objmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utlis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="objmodel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

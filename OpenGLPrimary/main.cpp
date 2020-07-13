@@ -3,6 +3,7 @@
 #include <gl/GLU.h> //数学好可以不必用他
 
 #include "texture.h"
+#include "objmodel.h"
 
 /* 监听用户操作函数;LRESULT(函数返回值类型); CALLBACK(调用方式)
    hwnd(窗口句柄，用于标记用户操作了哪一个窗口); msg(消息ID，比如1表示用户拖拽了窗口);
@@ -119,6 +120,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Texture texture;
 	texture.Init("./res/test.bmp");
+	ObjModel model;
+	model.Init("./res/Quad.obj");
 
 	//用循环来保持窗口显示
 	MSG msg;
@@ -137,49 +140,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		glPushMatrix();
 		glClear(GL_COLOR_BUFFER_BIT); //擦除颜色缓冲区
 
-		glEnable(GL_TEXTURE_2D); //开启纹理
-		glBindTexture(GL_TEXTURE_2D, texture.mTextureId);
-
-		//glScalef(1.0f, 1.0f, 0.5f); //缩放的是坐标
-		//glRotatef(30.0f, 0.0f, 0.0f, -1.0f);
-		//glTranslatef(2.0f, 0.0f, 0.0f);
-
-		//默认方向：ccw，逆时针方向
-		//GL_POLYGON:必须是凸多边形
-		glBegin(GL_TRIANGLES); 
-		//glColor4ub(255.0, 0.0, 0.0, 255.0); //颜色差值
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glTexCoord2d(0.0, 0.0);
-		glVertex3f(-1.0, -0.5, -2);
-
-		//glColor4ub(0.0, 255.0, 0.0, 255.0);
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glTexCoord2d(2.0, 0.0);
-		glVertex3f(1.0, -0.5, -2);
-
-		//glColor4ub(0.0, 0.0, 255.0, 255.0);
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glTexCoord2d(0.0, 2.0);
-		glVertex3f(-1.0, -0.5, -3);
-
-
-
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glTexCoord2d(0.0, 2.0);
-		glVertex3f(-1.0, -0.5, -3);
-
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glTexCoord2d(2.0, 0.0);
-		glVertex3f(1.0, -0.5, -2);
-
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glTexCoord2d(2.0, 2.0);
-		glVertex3f(1.0, -0.5, -3);
+		model.Draw();
 
 		glEnd();
-
 		glPopMatrix();
-		glBindTexture(GL_TEXTURE_2D, 0);
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}
