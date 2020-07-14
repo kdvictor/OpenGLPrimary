@@ -138,7 +138,7 @@ void ObjModel::Init(const char * const & pFilePath)
 
 void ObjModel::Draw()
 {
-	glPolygonMode(GL_FRONT, GL_LINE);
+	//glPolygonMode(GL_FRONT, GL_LINE);
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, -3.0f); //移动一下，不然看不见
 	glBegin(GL_TRIANGLES);

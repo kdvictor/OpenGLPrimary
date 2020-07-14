@@ -52,16 +52,17 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//视口大小
 	RECT rect;
 	rect.left = 0;
-	rect.right = 800;
+	rect.right = 1280;
 	rect.top = 0;
-	rect.bottom = 600;
+	rect.bottom = 720;
 	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, NULL); // 窗口风格和菜单句柄
-	int windowWidth = rect.right - rect.left;
-	int windowHeight = rect.bottom - rect.top;
 
 	//创建窗口
 	//参数依次对应为：窗口创建的风格，窗口名称（注册时的名称）, 窗口右上角标题栏，窗口的风格，窗帘起始位置，窗口的宽和高, 附窗口的句柄，菜单句柄， 窗口实例
-	HWND hwnd = CreateWindowEx(NULL, L"GLWindow", L"Opengl Window", WS_OVERLAPPEDWINDOW, 100, 100, windowWidth, windowHeight, NULL, NULL, hInstance, NULL);
+	HWND hwnd = CreateWindowEx(NULL, L"GLWindow", L"Opengl Window", WS_OVERLAPPEDWINDOW, 100, 100, rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, hInstance, NULL);
+	GetClientRect(hwnd, &rect);
+	int viewportWidth = rect.right - rect.left;
+	int viewportHeight = rect.bottom - rect.top;
 
 	//创建opengl渲染环境
 	HDC dc = GetDC(hwnd);
@@ -79,14 +80,16 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	HGLRC rc = wglCreateContext(dc); //渲染环境
 	wglMakeCurrent(dc, rc); //使渲染环境生效
 
+	glViewport(0, 0, viewportWidth, viewportHeight);
 	//初始化
 	glMatrixMode(GL_PROJECTION);
-	gluPerspective(50.0, 800.0 / 600.0, 0.1f, 1000.0f);
+	gluPerspective(50.0, (float)viewportWidth / (float)viewportHeight, 0.1f, 1000.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
 	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //擦除背景色
 	glEnable(GL_CULL_FACE); //只绘制正面，提高效率，如果电连接为顺时针则无法显示
+	glEnable(GL_DEPTH_TEST);
 
 	//glFrontFace(GL_CW); //设置正方向为顺时针
 
@@ -114,9 +117,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ambintMatri);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMatri);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, specularMatri);
-
-	//glEnable(GL_LIGHTING); //开启光照
-	//glEnable(GL_LIGHT0);
+	glMaterialf(GL_FRONT, GL_SHININESS, 128.0);
+	glEnable(GL_LIGHTING); //开启光照
+	glEnable(GL_LIGHT0);
 
 	Texture texture;
 	texture.Init("./res/test.bmp");
@@ -137,7 +140,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			DispatchMessage(&msg);
 		}
 		glLoadIdentity();//进来之后先给MV矩阵设为单位矩阵
-		glClear(GL_COLOR_BUFFER_BIT); //擦除颜色缓冲区
+		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //擦除颜色缓冲区
 		//glEnable(GL_TEXTURE_2D);
 		//glBindTexture(GL_TEXTURE_2D, texture.mTextureId);
 		model.Draw();
