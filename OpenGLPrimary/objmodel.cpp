@@ -2,6 +2,8 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <windows.h>
+#include <gl/GL.h>
 #include "objmodel.h"
 #include "utlis.h"
 
@@ -115,9 +117,39 @@ void ObjModel::Init(const char * const & pFilePath)
 		}
 	}
 
+	//生成数据
+	mIndexCount = indexes.size();
+	mIndices = new int[mIndexCount];
+	for (int i = 0; i < mIndexCount; ++i)
+	{
+		mIndices[i] = indexes[i];
+		//printf("%d\n", mIndices[i]);
+	}
+
+	int vertexCount = vertexDefines.size();
+	mVertexes = new VertexData[vertexCount];
+	for (int i = 0; i < vertexCount; ++i)
+	{
+		memcpy(mVertexes[i].position, positions[vertexDefines[i].positionIndex - 1].v, 3 * sizeof(float));
+		memcpy(mVertexes[i].texcoord, texcoords[vertexDefines[i].texcoordIndex - 1].v, 2 * sizeof(float));
+		memcpy(mVertexes[i].normal, normals[vertexDefines[i].normalIndex - 1].v, 3 * sizeof(float));
+	}
 }
 
 void ObjModel::Draw()
 {
+	glPolygonMode(GL_FRONT, GL_LINE);
+	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, -3.0f); //移动一下，不然看不见
+	glBegin(GL_TRIANGLES);
 
+	for (int i = 0; i < mIndexCount; ++i)
+	{
+		glTexCoord2fv(mVertexes[mIndices[i]].texcoord);
+		glNormal3fv(mVertexes[mIndices[i]].normal);
+		glVertex3f(mVertexes[mIndices[i]].position[0], mVertexes[mIndices[i]].position[1], mVertexes[mIndices[i]].position[2]);
+	}
+
+	glEnd();
+	glPopMatrix();
 }

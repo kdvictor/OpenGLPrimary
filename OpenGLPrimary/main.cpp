@@ -115,13 +115,13 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMatri);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, specularMatri);
 
-	glEnable(GL_LIGHTING); //开启光照
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHTING); //开启光照
+	//glEnable(GL_LIGHT0);
 
 	Texture texture;
 	texture.Init("./res/test.bmp");
 	ObjModel model;
-	model.Init("./res/Quad.obj");
+	model.Init("./res/Sphere.obj");
 
 	//用循环来保持窗口显示
 	MSG msg;
@@ -136,14 +136,12 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		//glLoadIdentity();//进来之后先给MV矩阵设为单位矩阵
-		glPushMatrix();
+		glLoadIdentity();//进来之后先给MV矩阵设为单位矩阵
 		glClear(GL_COLOR_BUFFER_BIT); //擦除颜色缓冲区
-
+		//glEnable(GL_TEXTURE_2D);
+		//glBindTexture(GL_TEXTURE_2D, texture.mTextureId);
 		model.Draw();
-
-		glEnd();
-		glPopMatrix();
+		//glBindTexture(GL_TEXTURE_2D, 0);
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}
