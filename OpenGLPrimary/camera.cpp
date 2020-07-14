@@ -17,14 +17,22 @@ void Camera::Update(float deltaTime)
 	float moveSpeed = 10.0f;
 	if (mMoveLeft)
 	{
-		mPos.x -= moveSpeed * deltaTime;
-		mViewCenter.x -= moveSpeed * deltaTime;
+		Vector3f moveDirection(-5.0,0.0,0.0);
+		moveDirection.Normalize();
+		mPos = mPos + moveDirection * moveSpeed*deltaTime;
+		mViewCenter = mViewCenter + moveDirection * moveSpeed*deltaTime;
+		//mPos.x -= moveSpeed * deltaTime;
+		//mViewCenter.x -= moveSpeed * deltaTime;
 	}
 
 	if (mMoveRight)
 	{
-		mPos.x += moveSpeed * deltaTime;
-		mViewCenter.x += moveSpeed * deltaTime;
+		Vector3f moveDirection(5.0, 0.0, 0.0); //3.0会影响速度，需要单位化
+		moveDirection.Normalize();
+		mPos = mPos + moveDirection * moveSpeed*deltaTime;
+		mViewCenter = mViewCenter + moveDirection * moveSpeed*deltaTime;
+		//mPos.x += moveSpeed * deltaTime;
+		//mViewCenter.x += moveSpeed * deltaTime;
 	}
 
 	//set modeview matrix
