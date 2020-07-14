@@ -31,6 +31,12 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case 'D':
 			camera.mMoveRight = true;
 			break;
+		case 'W':
+			camera.mMoveFoward = true;
+			break;
+		case 'S':
+			camera.mMoveBackWord = true;
+			break;
 		default:
 			break;
 		}
@@ -43,6 +49,12 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 		case 'D':
 			camera.mMoveRight = false;
+			break;
+		case 'W':
+			camera.mMoveFoward = false;
+			break;
+		case 'S':
+			camera.mMoveBackWord = false;
 			break;
 		default:
 			break;

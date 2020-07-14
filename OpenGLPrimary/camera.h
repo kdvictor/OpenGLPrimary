@@ -8,5 +8,5 @@ public:
 	void Update(float deltaTime);
 public:
 	Vector3f mPos, mViewCenter, mUp;
-	bool mMoveLeft, mMoveRight;
+	bool mMoveLeft, mMoveRight, mMoveFoward, mMoveBackWord;
 };

@@ -5,7 +5,7 @@
 #include "camera.h"
 
 Camera::Camera() : mPos(0.0f,0.0f,0.0f),mViewCenter(0.0f,0.0f,-1.0f),mUp(0.0f,1.0f,0.0f),
-mMoveLeft(false), mMoveRight(false)
+mMoveLeft(false), mMoveRight(false), mMoveFoward(false), mMoveBackWord(false)
 {
 
 }
@@ -33,6 +33,22 @@ void Camera::Update(float deltaTime)
 		mViewCenter = mViewCenter + moveDirection * moveSpeed*deltaTime;
 		//mPos.x += moveSpeed * deltaTime;
 		//mViewCenter.x += moveSpeed * deltaTime;
+	}
+
+	if (mMoveFoward)
+	{
+		Vector3f moveDirection(0.0, 0.0, -1.0);
+		moveDirection.Normalize();
+		mPos = mPos + moveDirection * moveSpeed*deltaTime;
+		mViewCenter = mViewCenter + moveDirection * moveSpeed*deltaTime;
+	}
+
+	if (mMoveBackWord)
+	{
+		Vector3f moveDirection(0.0, 0.0, 1.0); //3.0会影响速度，需要单位化
+		moveDirection.Normalize();
+		mPos = mPos + moveDirection * moveSpeed*deltaTime;
+		mViewCenter = mViewCenter + moveDirection * moveSpeed*deltaTime;
 	}
 
 	//set modeview matrix
