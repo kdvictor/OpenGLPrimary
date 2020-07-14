@@ -23,8 +23,30 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_RBUTTONUP:
 		break;
 	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case 'A':
+			camera.mMoveLeft = true;
+			break;
+		case 'D':
+			camera.mMoveRight = true;
+			break;
+		default:
+			break;
+		}
 		break;
 	case WM_KEYUP:
+		switch (wParam)
+		{
+		case 'A':
+			camera.mMoveLeft = false;
+			break;
+		case 'D':
+			camera.mMoveRight = false;
+			break;
+		default:
+			break;
+		}
 		break;
 	case WM_CLOSE: //目前只关心退出窗口的消息
 		PostQuitMessage(0);
@@ -139,6 +161,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ObjModel model;
 	model.Init("./res/Sphere.obj");
 
+	//static float timeFromStartUp = timeGetTime() / 1000.0; //按电源开始到现在的时间
 	//用循环来保持窗口显示
 	MSG msg;
 	while (true)
@@ -153,6 +176,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			DispatchMessage(&msg);
 		}
 		glLoadIdentity();//进来之后先给MV矩阵设为单位矩阵
+
+		//float currentTime = timeGetTime() / 1000.0;
+		//float timeDelta = currentTime - timeFromStartUp;
+		//timeFromStartUp = currentTime;
 
 		camera.Update(0.016f);
 
