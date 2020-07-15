@@ -8,7 +8,7 @@
 
 Camera camera;
 POINT originalPoint;
-bool isRotate;
+bool isRotate = false;
 /* 监听用户操作函数;LRESULT(函数返回值类型); CALLBACK(调用方式)
    hwnd(窗口句柄，用于标记用户操作了哪一个窗口); msg(消息ID，比如1表示用户拖拽了窗口);
    wParam(消息附带参数，比如用户拖拽窗口，具体拖到什么地方去了); lParam(消息附带参数)
@@ -20,7 +20,21 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEMOVE:
 		if (isRotate)
 		{
-			camera.Pitch(0.01f);
+			POINT currentPoint;
+			currentPoint.x = LOWORD(lParam);
+			currentPoint.y = HIWORD(lParam);
+			ClientToScreen(hwnd, &currentPoint);
+			int deltaX = currentPoint.x - originalPoint.x;
+			int deltaY = currentPoint.y - originalPoint.y;
+			if (deltaY > 0)
+			{
+				camera.Pitch(-0.01f);
+			}
+			else
+			{
+				camera.Pitch(0.01f);
+			}
+			SetCursorPos(originalPoint.x, originalPoint.y);
 		}
 		break;
 	case WM_RBUTTONDOWN:
