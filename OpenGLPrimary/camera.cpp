@@ -19,34 +19,34 @@ void Camera::Update(float deltaTime)
 	if (mMoveLeft)
 	{
 		/********************万向锁（查）四元素**************************/
-		//Vector3f moveDirection(-5.0, 0.0, 0.0);
-		//moveDirection.Normalize();
-		//mPos = mPos + moveDirection * moveSpeed*deltaTime;
-		//mViewCenter = mViewCenter + moveDirection * moveSpeed*deltaTime;
-		////mPos.x -= moveSpeed * deltaTime;
-		////mViewCenter.x -= moveSpeed * deltaTime;
+		Vector3f viewDirection = mViewCenter - mPos;
+		viewDirection.Normalize();
+		Vector3f moveDirection = mUp^viewDirection;
+		moveDirection.Normalize();
+		mPos = mPos + moveDirection * moveSpeed*deltaTime;
+		mViewCenter = mViewCenter + moveDirection * moveSpeed*deltaTime;
 
 		//rotate
-		RotateView(moveSpeed*deltaTime, 0.0, 1.0, 0.0);
+		//RotateView(moveSpeed*deltaTime, 0.0, 1.0, 0.0);
 	}
 
 	if (mMoveRight)
 	{
-		//Vector3f moveDirection(5.0, 0.0, 0.0); //3.0会影响速度，需要单位化
-		//moveDirection.Normalize();
-		//mPos = mPos + moveDirection * moveSpeed*deltaTime;
-		//mViewCenter = mViewCenter + moveDirection * moveSpeed*deltaTime;
-		////mPos.x += moveSpeed * deltaTime;
-		////mViewCenter.x += moveSpeed * deltaTime;
+		Vector3f viewDirection = mViewCenter - mPos;
+		viewDirection.Normalize();
+		Vector3f moveDirection = viewDirection^mUp; //3.0会影响速度，需要单位化
+		moveDirection.Normalize();
+		mPos = mPos + moveDirection * moveSpeed*deltaTime;
+		mViewCenter = mViewCenter + moveDirection * moveSpeed*deltaTime;
 
 		//rotate
-		RotateView(moveSpeed*deltaTime, 0.0, -1.0, 0.0);
+		//RotateView(moveSpeed*deltaTime, 0.0, -1.0, 0.0);
 
 	}
 
 	if (mMoveFoward)
 	{
-		Vector3f moveDirection(0.0, 0.0, -1.0);
+		Vector3f moveDirection = mViewCenter - mPos;
 		moveDirection.Normalize();
 		mPos = mPos + moveDirection * moveSpeed*deltaTime;
 		mViewCenter = mViewCenter + moveDirection * moveSpeed*deltaTime;
@@ -54,7 +54,7 @@ void Camera::Update(float deltaTime)
 
 	if (mMoveBackWord)
 	{
-		Vector3f moveDirection(0.0, 0.0, 1.0); //3.0会影响速度，需要单位化
+		Vector3f moveDirection = mPos - mViewCenter; //3.0会影响速度，需要单位化
 		moveDirection.Normalize();
 		mPos = mPos + moveDirection * moveSpeed*deltaTime;
 		mViewCenter = mViewCenter + moveDirection * moveSpeed*deltaTime;
@@ -93,4 +93,10 @@ void Camera::Pitch(const float& angle)
 	rightDirection.Normalize();
 
 	RotateView(angle, rightDirection.x, rightDirection.y, rightDirection.z);
+}
+
+void Camera::Yam(const float & angle)
+{
+	mUp.Normalize();
+	RotateView(angle, mUp.x, mUp.y, mUp.z);
 }

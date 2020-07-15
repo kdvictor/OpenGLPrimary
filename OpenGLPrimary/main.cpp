@@ -26,14 +26,10 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			ClientToScreen(hwnd, &currentPoint);
 			int deltaX = currentPoint.x - originalPoint.x;
 			int deltaY = currentPoint.y - originalPoint.y;
-			if (deltaY > 0)
-			{
-				camera.Pitch(-0.01f);
-			}
-			else
-			{
-				camera.Pitch(0.01f);
-			}
+			float rotateAngleRoll = deltaY / 1000.0; //极限公式支撑
+			float rotateAnglePitch = deltaX / 1000.0;
+			camera.Pitch(-rotateAngleRoll);
+			camera.Yam(-rotateAnglePitch);
 			SetCursorPos(originalPoint.x, originalPoint.y);
 		}
 		break;

@@ -6,7 +6,9 @@ class Camera
 public:
 	Camera();
 	void Update(float deltaTime);
-	void Pitch(const float& angle); //上下旋转
+	void Pitch(const float& angle); //上下旋转:X
+	void Yam(const float& angle); //左右：Y
+	//void Roll(const float& angle); //Z
 public:
 	Vector3f mPos, mViewCenter, mUp;
 	bool mMoveLeft, mMoveRight, mMoveFoward, mMoveBackWord;
