@@ -9,4 +9,7 @@ public:
 public:
 	Vector3f mPos, mViewCenter, mUp;
 	bool mMoveLeft, mMoveRight, mMoveFoward, mMoveBackWord;
+
+protected:
+	void RotateView(const float& angle, const float& x, const float& y, const float& z);
 };

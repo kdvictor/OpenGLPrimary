@@ -8,14 +8,29 @@ Vector3f::Vector3f(const float& x, const float& y, const float& z)
 	this->z = z;
 }
 
+Vector3f::Vector3f() : x(0.0), y(0.0), z(0.0)
+{
+
+}
+
 Vector3f Vector3f::operator*(const float& scale)
 {
 	return Vector3f(x*scale, y*scale, z*scale);
 }
 
+float Vector3f::operator*(const Vector3f & v)
+{
+	return (x*v.x + y * v.y + z * v.z);
+}
+
 Vector3f Vector3f::operator+(const Vector3f& v)
 {
 	return Vector3f(x + v.x, y + v.y, z + v.z);
+}
+
+Vector3f Vector3f::operator-(const Vector3f& v)
+{
+	return Vector3f(x - v.x, y - v.y, z - v.z);
 }
 
 void Vector3f::operator=(const Vector3f& v)
