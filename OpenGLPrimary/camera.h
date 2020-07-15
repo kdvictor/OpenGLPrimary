@@ -6,6 +6,7 @@ class Camera
 public:
 	Camera();
 	void Update(float deltaTime);
+	void Pitch(const float& angle); //ÉÏÏÂÐý×ª
 public:
 	Vector3f mPos, mViewCenter, mUp;
 	bool mMoveLeft, mMoveRight, mMoveFoward, mMoveBackWord;

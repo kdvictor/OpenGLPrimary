@@ -23,6 +23,11 @@ float Vector3f::operator*(const Vector3f & v)
 	return (x*v.x + y * v.y + z * v.z);
 }
 
+Vector3f Vector3f::operator^(const Vector3f & v)
+{
+	return Vector3f(y*v.z-z*v.y, x*v.z-z*v.x, x*v.y-y*v.x);
+}
+
 Vector3f Vector3f::operator+(const Vector3f& v)
 {
 	return Vector3f(x + v.x, y + v.y, z + v.z);

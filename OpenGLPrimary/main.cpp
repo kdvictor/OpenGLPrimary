@@ -7,7 +7,8 @@
 #include "camera.h"
 
 Camera camera;
-
+POINT originalPoint;
+bool isRotate;
 /* 监听用户操作函数;LRESULT(函数返回值类型); CALLBACK(调用方式)
    hwnd(窗口句柄，用于标记用户操作了哪一个窗口); msg(消息ID，比如1表示用户拖拽了窗口);
    wParam(消息附带参数，比如用户拖拽窗口，具体拖到什么地方去了); lParam(消息附带参数)
@@ -17,10 +18,24 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	switch (msg)
 	{
 	case WM_MOUSEMOVE:
+		if (isRotate)
+		{
+			camera.Pitch(0.01f);
+		}
 		break;
 	case WM_RBUTTONDOWN:
+		originalPoint.x = LOWORD(lParam);
+		originalPoint.y = HIWORD(lParam);
+		ClientToScreen(hwnd, &originalPoint);
+		SetCapture(hwnd);
+		ShowCursor(false);
+		isRotate = true;
 		break;
 	case WM_RBUTTONUP:
+		SetCursorPos(originalPoint.x, originalPoint.y);
+		ReleaseCapture();
+		ShowCursor(true);
+		isRotate = false;
 		break;
 	case WM_KEYDOWN:
 		switch (wParam)

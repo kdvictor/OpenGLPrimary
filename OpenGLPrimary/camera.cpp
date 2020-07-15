@@ -18,6 +18,7 @@ void Camera::Update(float deltaTime)
 	float moveSpeed = 10.0f;
 	if (mMoveLeft)
 	{
+		/********************万向锁（查）四元素**************************/
 		//Vector3f moveDirection(-5.0, 0.0, 0.0);
 		//moveDirection.Normalize();
 		//mPos = mPos + moveDirection * moveSpeed*deltaTime;
@@ -80,4 +81,16 @@ void Camera::RotateView(const float& angle, const float& x, const float& y, cons
 	newDirection.z = tempZ * viewDirection;
 
 	mViewCenter = mPos + newDirection;
+}
+
+void Camera::Pitch(const float& angle)
+{
+	//right direction vector
+	Vector3f rightDirection;
+	Vector3f viewerDirection = mViewCenter - mPos;
+	viewerDirection.Normalize();
+	rightDirection = viewerDirection ^ mUp;
+	rightDirection.Normalize();
+
+	RotateView(angle, rightDirection.x, rightDirection.y, rightDirection.z);
 }
