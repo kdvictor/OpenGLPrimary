@@ -193,8 +193,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	glEnable(GL_LIGHTING); //开启光照
 	glEnable(GL_LIGHT0);
 
-	Texture texture;
-	texture.Init("./res/earth.bmp");
+	Texture* texture = Texture::LoadTexture("./res/earth.bmp");
 	ObjModel model;
 	model.Init("./res/Sphere.obj");
 
@@ -222,7 +221,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //擦除颜色缓冲区
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, texture.mTextureId);
+		glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
 		model.Draw();
 		glBindTexture(GL_TEXTURE_2D, 0);
 

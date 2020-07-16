@@ -1,8 +1,21 @@
 #include "texture.h"
 #include "utlis.h"
+#include "soil.h"
 
-void Texture::Init(const char * const & pFilePath)
+std::unordered_map<std::string, Texture*> Texture::mTextures;
+
+void Texture::Init(const char * const & pFilePath, bool invertY)
 {
+	int flags = SOIL_FLAG_POWER_OF_TWO;
+	if (invertY)
+	{
+		flags |= SOIL_FLAG_INVERT_Y;
+	}
+	/*********************SOIL库处理图像***************************/
+	mTextureId = SOIL_load_OGL_texture(pFilePath, 0, 0, flags);
+	mFilePath = pFilePath;
+	return;
+	/*********************SOIL库处理图像***************************/
 	//load file content
 	unsigned char* pFileContent = nullptr;
 	pFileContent = LoadFileContent(pFilePath);
@@ -34,4 +47,30 @@ void Texture::Init(const char * const & pFilePath)
 
 	//delete[] pFileContent; pFileContent = nullptr;
 	return;
+}
+
+Texture* Texture::LoadTexture(const char* const& pFilePath, bool invertY)
+{
+	if (mTextures.find(pFilePath) != mTextures.end())
+	{
+		return mTextures[pFilePath];
+	}
+
+	Texture* texture = new Texture();
+	texture->Init(pFilePath,invertY);
+	mTextures.insert(std::make_pair(pFilePath, texture));
+
+	return texture;
+}
+
+void Texture::UnLoadTexture(const Texture*& ptexture)
+{
+	auto iter = mTextures.find(ptexture->mFilePath);
+	if (iter != mTextures.end())
+	{
+		mTextures.erase(iter);
+		glDeleteTextures(1, &iter->second->mTextureId);
+		delete(ptexture);
+		ptexture = nullptr;
+	}
 }
