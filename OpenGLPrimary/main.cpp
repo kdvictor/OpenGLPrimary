@@ -5,8 +5,10 @@
 #include "texture.h"
 #include "objmodel.h"
 #include "camera.h"
+#include "skybox.h"
 
 Camera camera;
+SkyBox skyBox;
 POINT originalPoint;
 bool isRotate = false;
 /* 监听用户操作函数;LRESULT(函数返回值类型); CALLBACK(调用方式)
@@ -196,8 +198,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Texture* texture = Texture::LoadTexture("./res/earth.bmp");
 	ObjModel model;
 	model.Init("./res/Sphere.obj");
+	skyBox.Init("./res/skybox");
 
-	//static float timeFromStartUp = timeGetTime() / 1000.0; //按电源开始到现在的时间
+	static float sTimeSinceStartUp = timeGetTime() / 1000.0f;
 	//用循环来保持窗口显示
 	MSG msg;
 	while (true)
@@ -212,14 +215,17 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			DispatchMessage(&msg);
 		}
 		glLoadIdentity();//进来之后先给MV矩阵设为单位矩阵
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //擦除颜色缓冲区
 
-		//float currentTime = timeGetTime() / 1000.0;
-		//float timeDelta = currentTime - timeFromStartUp;
-		//timeFromStartUp = currentTime;
+		float currentTime = timeGetTime() / 1000.0f;
+		float timeElapse = currentTime - sTimeSinceStartUp;
+		sTimeSinceStartUp = currentTime;
 
 		camera.Update(0.016f);
 
-		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); //擦除颜色缓冲区
+		//先画最远的才行
+		skyBox.Draw(camera.mPos.x, camera.mPos.y, camera.mPos.z);
+
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
 		model.Draw();
