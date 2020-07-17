@@ -216,6 +216,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 		glLoadIdentity();//进来之后先给MV矩阵设为单位矩阵
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //擦除颜色缓冲区
+		//GL_DEPTH_BUFFER_BIT，深度1.0，深度最远
 
 		float currentTime = timeGetTime() / 1000.0f;
 		float timeElapse = currentTime - sTimeSinceStartUp;
