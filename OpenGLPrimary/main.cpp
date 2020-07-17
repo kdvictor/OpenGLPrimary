@@ -156,11 +156,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	glViewport(0, 0, viewportWidth, viewportHeight);
 	//初始化
-	glMatrixMode(GL_PROJECTION);
-	gluPerspective(50.0, (float)viewportWidth / (float)viewportHeight, 0.1f, 1000.0f);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	
+	camera.viewPortWidth = viewportWidth;
+	camera.viewPortHeight = viewportHeight;
+
+
 	glClearColor(0.1f, 0.4f, 0.6f, 1.0f); //擦除背景色
 	glEnable(GL_CULL_FACE); //只绘制正面，提高效率，如果电连接为顺时针则无法显示
 	glEnable(GL_DEPTH_TEST);
@@ -214,6 +213,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+		camera.SwitchTo3D();
 		glLoadIdentity();//进来之后先给MV矩阵设为单位矩阵
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //擦除颜色缓冲区
 		//GL_DEPTH_BUFFER_BIT，深度1.0，深度最远
@@ -221,6 +221,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		float currentTime = timeGetTime() / 1000.0f;
 		float timeElapse = currentTime - sTimeSinceStartUp;
 		sTimeSinceStartUp = currentTime;
+		//printf("%f\n", timeElapse);
 
 		camera.Update(0.016f);
 
@@ -230,8 +231,20 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
 		model.Draw();
-		glBindTexture(GL_TEXTURE_2D, 0);
 
+		//draw ui
+		camera.SwitchTo2D();
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 1.0);
+		glVertex3f(-viewportWidth/2.0, 0.0, -0.0);
+		glTexCoord2f(0.0, 0.0);
+		glVertex3f(-viewportWidth / 2.0, -viewportHeight / 2.0, -0.0);
+		glTexCoord2f(1.0, 0.0);
+		glVertex3f(0.0, -viewportHeight / 2.0, -0.0);
+		glTexCoord2f(1.0, 1.0);
+		glVertex3f(0.0, 0.0, -0.0);
+		glEnd();
+		glBindTexture(GL_TEXTURE_2D, 0);
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}
 

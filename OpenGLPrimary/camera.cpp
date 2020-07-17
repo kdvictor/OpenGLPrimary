@@ -100,3 +100,19 @@ void Camera::Yam(const float & angle)
 	mUp.Normalize();
 	RotateView(angle, mUp.x, mUp.y, mUp.z);
 }
+
+void Camera::SwitchTo2D()
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(-viewPortWidth / 2, viewPortWidth / 2, -viewPortHeight / 2, viewPortHeight / 2);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void Camera::SwitchTo3D()
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(50.0, (float)viewPortWidth / (float)viewPortHeight, 0.1f, 1000.0f);
+	glMatrixMode(GL_MODELVIEW);
+}
