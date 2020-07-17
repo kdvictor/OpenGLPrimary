@@ -194,6 +194,18 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	glEnable(GL_LIGHTING); //开启光照
 	glEnable(GL_LIGHT0);
 
+	float uiPoints[] = { -viewportWidth / 2.0, 0.0, -0.0 ,
+		-viewportWidth / 2.0, -viewportHeight / 2.0, -0.0,
+		0.0, -viewportHeight / 2.0, -0.0 ,
+		0.0, 0.0, -0.0 };
+
+	float uiTexcoords[] = {
+		0.0, 1.0,
+		0.0, 0.0,
+		1.0, 0.0,
+		1.0, 1.0
+	};
+
 	Texture* texture = Texture::LoadTexture("./res/earth.bmp");
 	ObjModel model;
 	model.Init("./res/Sphere.obj");
@@ -234,16 +246,12 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		//draw ui
 		camera.SwitchTo2D();
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0, 1.0);
-		glVertex3f(-viewportWidth/2.0, 0.0, -0.0);
-		glTexCoord2f(0.0, 0.0);
-		glVertex3f(-viewportWidth / 2.0, -viewportHeight / 2.0, -0.0);
-		glTexCoord2f(1.0, 0.0);
-		glVertex3f(0.0, -viewportHeight / 2.0, -0.0);
-		glTexCoord2f(1.0, 1.0);
-		glVertex3f(0.0, 0.0, -0.0);
-		glEnd();
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_FLOAT, 0, uiPoints);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glTexCoordPointer(2, GL_FLOAT, 0, uiTexcoords);
+		glDrawArrays(GL_QUADS, 0, 4);
+
 		glBindTexture(GL_TEXTURE_2D, 0);
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}
