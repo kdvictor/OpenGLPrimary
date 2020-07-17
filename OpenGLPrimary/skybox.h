@@ -1,5 +1,7 @@
 #pragma once
 #include "texture.h"
+#include "displaylist.h"
+
 class SkyBox
 {
 public:
@@ -7,4 +9,5 @@ public:
 	void Draw(const int& x, const int& y, const int& z);
 public:
 	Texture *mFront, *mBack, *mLeft, *mRight, *mTop, *mBottom;
+	DisplayList mDisplayList;
 };
