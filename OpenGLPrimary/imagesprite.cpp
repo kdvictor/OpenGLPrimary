@@ -27,6 +27,7 @@ void ImageSprite::Draw()
 	//glAlphaFunc(GL_GREATER, 0.1); //透明度> 0.1才画出来
 	//混合
 	glEnable(GL_BLEND);
+	//dst = src*alpha(src.alpha) + dst*alpha(1 -(src.alpha) )
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_LIGHTING);
 	glBegin(GL_QUADS);
