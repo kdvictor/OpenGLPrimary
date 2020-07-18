@@ -7,9 +7,11 @@
 #include "camera.h"
 #include "skybox.h"
 #include "imagesprite.h"
+#include "ground.h"
 
 Camera camera;
 SkyBox skyBox;
+Ground ground;
 ImageSprite imageSprite;
 POINT originalPoint;
 bool isRotate = false;
@@ -205,6 +207,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//imageSprite
 	imageSprite.SetTexture(spriteTexture);
 	imageSprite.SetRect(-300.0, -200.0, 100.0, 100.0);
+	//ground
+	ground.Init();
 
 	static float sTimeSinceStartUp = timeGetTime() / 1000.0f;
 	//用循环来保持窗口显示
@@ -234,6 +238,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		//先画最远的才行
 		skyBox.Draw(camera.mPos.x, camera.mPos.y, camera.mPos.z);
+		//ground
+		ground.Draw();
 
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
