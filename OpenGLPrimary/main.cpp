@@ -6,9 +6,11 @@
 #include "objmodel.h"
 #include "camera.h"
 #include "skybox.h"
+#include "imagesprite.h"
 
 Camera camera;
 SkyBox skyBox;
+ImageSprite imageSprite;
 POINT originalPoint;
 bool isRotate = false;
 /* 监听用户操作函数;LRESULT(函数返回值类型); CALLBACK(调用方式)
@@ -194,22 +196,15 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	glEnable(GL_LIGHTING); //开启光照
 	glEnable(GL_LIGHT0);
 
-	float uiPoints[] = { -viewportWidth / 2.0, 0.0, -0.0 ,
-		-viewportWidth / 2.0, -viewportHeight / 2.0, -0.0,
-		0.0, -viewportHeight / 2.0, -0.0 ,
-		0.0, 0.0, -0.0 };
-
-	float uiTexcoords[] = {
-		0.0, 1.0,
-		0.0, 0.0,
-		1.0, 0.0,
-		1.0, 1.0
-	};
-
 	Texture* texture = Texture::LoadTexture("./res/earth.bmp");
+	Texture* spriteTexture = Texture::LoadTexture("./res/head.png");
+
 	ObjModel model;
 	model.Init("./res/Sphere.obj");
 	skyBox.Init("./res/skybox");
+	//imageSprite
+	imageSprite.SetTexture(spriteTexture);
+	imageSprite.SetRect(-300.0, -200.0, 100.0, 100.0);
 
 	static float sTimeSinceStartUp = timeGetTime() / 1000.0f;
 	//用循环来保持窗口显示
@@ -243,16 +238,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
 		model.Draw();
-
+		glBindTexture(GL_TEXTURE_2D, 0);
 		//draw ui
 		camera.SwitchTo2D();
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, 0, uiPoints);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glTexCoordPointer(2, GL_FLOAT, 0, uiTexcoords);
-		glDrawArrays(GL_QUADS, 0, 4);
+		imageSprite.Draw();
 
-		glBindTexture(GL_TEXTURE_2D, 0);
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}
 
