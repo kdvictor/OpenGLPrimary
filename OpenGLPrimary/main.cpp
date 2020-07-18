@@ -241,6 +241,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//draw ui
 		camera.SwitchTo2D();
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 		imageSprite.Draw();
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
