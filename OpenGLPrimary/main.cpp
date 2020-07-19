@@ -229,6 +229,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //擦除颜色缓冲区
 		//GL_DEPTH_BUFFER_BIT，深度1.0，深度最远
 
+		glViewport(0, viewportHeight / 2, viewportWidth / 2, viewportHeight / 2); //规定画画的范围,左下角是(0,0)
 		float currentTime = timeGetTime() / 1000.0f;
 		float timeElapse = currentTime - sTimeSinceStartUp;
 		sTimeSinceStartUp = currentTime;
@@ -262,10 +263,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 		//draw ui
-		camera.SwitchTo2D();
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		imageSprite.Draw();
+		//camera.SwitchTo2D();
+		//glMatrixMode(GL_MODELVIEW);
+		//glLoadIdentity();
+		//imageSprite.Draw();
 
 		SwapBuffers(dc); //交换前后缓冲区使得用户可以看见
 	}
