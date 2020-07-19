@@ -243,8 +243,24 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture->mTextureId);
+
+		//镜像
+		glClear(GL_DEPTH_BUFFER_BIT);
+		glDisable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_COLOR, GL_ONE);
+		glPushMatrix();
+		glTranslatef(0.0f, -2.0f, 0.0f);
+		model.Draw();
+		glPopMatrix();
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
+
+		//实体
 		model.Draw();
 		glBindTexture(GL_TEXTURE_2D, 0);
+
+
 		//draw ui
 		camera.SwitchTo2D();
 		glMatrixMode(GL_MODELVIEW);

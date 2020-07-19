@@ -5,7 +5,7 @@
 #include <gl/GLU.h>
 #include "camera.h"
 
-Camera::Camera() : mPos(0.0f,0.0f,0.0f),mViewCenter(0.0f,0.0f,-1.0f),mUp(0.0f,1.0f,0.0f),
+Camera::Camera() : mPos(0.0f,0.0f,5.0f),mViewCenter(0.0f,0.0f,1.0f),mUp(0.0f,1.0f,0.0f),
 mMoveLeft(false), mMoveRight(false), mMoveFoward(false), mMoveBackWord(false)
 {
 
